@@ -49,11 +49,6 @@ export interface UpdateFeedbackRequest {
 
 // ---------- Analysis API Tipleri ----------
 
-/** POST /api/v1/analyses/trigger — istek gövdesi */
-export interface TriggerAnalysisRequest {
-  feedbackIds: number[];
-}
-
 /** POST /api/v1/analyses/trigger — yanıt */
 export interface TriggerAnalysisResponse {
   message: string;

@@ -49,7 +49,6 @@ export function TeamView({ feedbacks, onUpdateStatus }: TeamViewProps) {
     try {
       const { data } = await axios.post<TriggerAnalysisResponse>(
         'http://localhost:8080/api/v1/analyses/trigger',
-        { feedbackIds: unanalyzedIds },
       );
       notifApi.success({
         message: 'Analiz Başlatıldı',
@@ -79,7 +78,7 @@ export function TeamView({ feedbacks, onUpdateStatus }: TeamViewProps) {
       ),
     },
     { title: 'Ekran', dataIndex: 'screenName', key: 'screenName' },
-    { title: 'Gorus', dataIndex: 'feedbackText', key: 'feedbackText', width: '35%' },
+    { title: 'Görüş', dataIndex: 'feedbackText', key: 'feedbackText', width: '35%' },
     {
       title: 'Durum',
       key: 'action',
