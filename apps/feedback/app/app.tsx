@@ -1,13 +1,6 @@
-// Uncomment this line to use CSS modules
-// import styles from './app.module.css';
-import NxWelcome from './nx-welcome';
+import { MainLayout } from './layout/main-layout/main-layout';
 
-export function App() {
-  return (
-    <div>
-      <NxWelcome title="@feedback/feedback" />
-    </div>
-  );
+export default function App() {
+  return <MainLayout />;
 }
 
-export default App;

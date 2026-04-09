@@ -1,8 +1,9 @@
+import { test } from 'vitest';
 import { createRoutesStub } from 'react-router';
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import App from '../../app/app';
 
-test('renders loader data', async () => {
+test('renders app without crashing', async () => {
   const ReactRouterStub = createRoutesStub([
     {
       path: '/',
@@ -12,5 +13,5 @@ test('renders loader data', async () => {
 
   render(<ReactRouterStub />);
 
-  await waitFor(() => screen.findByText('Hello there,'));
+  await screen.findByText('Turkcell');
 });

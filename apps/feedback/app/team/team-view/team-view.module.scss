@@ -6,10 +6,10 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  margin-bottom: 32px;
+  margin-bottom: 2rem;
 }
 
-.headerText {
+.header-text {
   text-align: left;
 }
 
@@ -23,36 +23,66 @@
 .subtitle {
   font-weight: 700;
   text-transform: uppercase;
-  font-size: 12px;
-  letter-spacing: 1px;
+  font-size: 0.75rem;
+  letter-spacing: 0.0625rem;
   color: #94a3b8;
 }
 
+.stat-card {
+  border-radius: 1.25rem;
+  background: #fff;
+  box-shadow: 0 0.5rem 1.5rem rgba(0, 40, 85, 0.04);
+}
+
+.stat-space {
+  padding: 0.25rem 0.75rem;
+}
+
+.stat-item {
+  text-align: center;
+}
+
 .divider {
-  width: 1px;
-  height: 24px;
+  width: 0.0625rem;
+  height: 1.5rem;
   background: #f1f5f9;
 }
 
-.statLabel {
-  font-size: 10px;
+.stat-label {
+  font-size: 0.625rem;
   font-weight: 900;
   color: #94a3b8;
 }
 
-.statValue {
-  font-size: 20px;
+.stat-value {
+  font-size: 1.25rem;
   color: #002855;
   font-weight: 700;
 }
 
-.statValuePending {
-  font-size: 20px;
+.stat-label-pending {
+  font-size: 0.625rem;
+  font-weight: 900;
+  color: #faad14;
+}
+
+.stat-value-pending {
+  font-size: 1.25rem;
   color: #faad14;
   font-weight: 700;
 }
 
+.id-text {
+  font-style: italic;
+  color: #002855;
+  font-weight: 700;
+}
+
+.select {
+  width: 11.875rem;
+}
+
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
+  from { opacity: 0; transform: translateY(0.625rem); }
   to   { opacity: 1; transform: translateY(0); }
 }

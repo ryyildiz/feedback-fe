@@ -1,5 +1,4 @@
-import React from 'react';
-import { CommentOutlined } from '@ant-design/icons';
+import { MessageOutlined } from '@ant-design/icons';
 import styles from './feedback-fab.module.scss';
 
 interface FeedbackFabProps {
@@ -9,10 +8,8 @@ interface FeedbackFabProps {
 export function FeedbackFab({ onClick }: FeedbackFabProps) {
   return (
     <div className={styles.fab} onClick={onClick}>
-      <CommentOutlined className={styles.fabIcon} />
-      <span className={styles.fabText}>FİKRİNİ PAYLAŞ</span>
+      <MessageOutlined className={styles['fab-icon']} />
+      <span className={styles['fab-text']}>FİKRİNİ PAYLAŞ</span>
     </div>
   );
 }
-
-export default FeedbackFab;

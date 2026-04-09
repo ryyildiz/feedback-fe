@@ -6,21 +6,21 @@ import { TeamView } from './team-view';
 const mockFeedbacks: Feedback[] = [
   {
     id: 'TK-0001',
-    topic: 'Hata',
+    issueType: 'Hata',
     screenName: 'Ana Sayfa',
     url: '/home',
     feedback: 'Buton çalışmıyor.',
     status: 'awaiting',
-    date: '01.04.2025',
+    createdAt: '01.04.2025',
   },
   {
     id: 'TK-0002',
-    topic: 'Öneri',
+    issueType: 'Öneri',
     screenName: 'Profil',
-    url: '/profil',
+    url: '/paketlerim',
     feedback: 'Karanlık mod eklenebilir.',
     status: 'resolved',
-    date: '02.04.2025',
+    createdAt: '02.04.2025',
   },
 ];
 

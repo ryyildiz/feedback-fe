@@ -1,19 +1,27 @@
 import { Card, Select, Space, Table, Typography } from 'antd';
-import {
-  CheckCircleOutlined,
-  ClockCircleOutlined,
-  CloseCircleOutlined,
-  DashboardOutlined,
-} from '@ant-design/icons';
-import type { Feedback } from '../types';
+import type { Feedback, FeedbackStatus } from '../../types';
 import styles from './team-view.module.scss';
 
 const { Title, Text } = Typography;
 
 interface TeamViewProps {
   feedbacks: Feedback[];
-  onUpdateStatus: (id: string, status: Feedback['status']) => void;
+  onUpdateStatus: (id: number, status: FeedbackStatus) => void;
 }
+
+const STATUS_OPTIONS: { value: FeedbackStatus; label: string; dot: string }[] = [
+  { value: 'AWAITING',     label: 'Beklemede',      dot: '#f97316' },
+  { value: 'IN_PROGRESS',  label: 'Planlamaya Al',  dot: '#3b82f6' },
+  { value: 'RESOLVED',     label: 'Tamamlandi',     dot: '#22c55e' },
+  { value: 'CANCELLED',    label: 'Iptal Edildi',   dot: '#ef4444' },
+];
+
+const statusOption = (opt: typeof STATUS_OPTIONS[number]) => (
+  <Space size={6}>
+    <span style={{ width: '0.5rem', height: '0.5rem', borderRadius: '50%', background: opt.dot, display: 'inline-block', flexShrink: 0 }} />
+    <span>{opt.label}</span>
+  </Space>
+);
 
 export function TeamView({ feedbacks, onUpdateStatus }: TeamViewProps) {
   const columns = [
@@ -22,28 +30,24 @@ export function TeamView({ feedbacks, onUpdateStatus }: TeamViewProps) {
       dataIndex: 'id',
       key: 'id',
       render: (text: string) => (
-        <Text strong style={{ fontStyle: 'italic', color: '#002855' }}>{text}</Text>
+        <Text strong className={styles['id-text']}>{text}</Text>
       ),
     },
-    { title: 'Ekran',  dataIndex: 'screenName', key: 'screenName' },
-    { title: 'Görüş',  dataIndex: 'feedback',   key: 'feedback', width: '35%' },
+    { title: 'Ekran', dataIndex: 'screenName', key: 'screenName' },
+    { title: 'Gorus', dataIndex: 'feedbackText', key: 'feedbackText', width: '35%' },
     {
       title: 'Durum',
       key: 'action',
-      align: 'right' as const,
       render: (_: unknown, record: Feedback) => (
         <Select
           value={record.status}
-          className={`status-select-premium status-${record.status}`}
-          popupClassName="premium-dropdown"
-          style={{ width: 190 }}
+          className={`status-select-premium status-${record.status} ${styles.select}`}
+          classNames={{ popup: { root: 'premium-dropdown' } }}
           onChange={(val) => onUpdateStatus(record.id, val)}
-          options={[
-            { value: 'awaiting',  label: <Space><ClockCircleOutlined />  <span>Beklemede</span></Space> },
-            { value: 'backlog',   label: <Space><DashboardOutlined />    <span>Planlamaya Al</span></Space> },
-            { value: 'resolved',  label: <Space><CheckCircleOutlined />  <span>Tamamlandı</span></Space> },
-            { value: 'canceled',  label: <Space><CloseCircleOutlined />  <span>İptal Edildi</span></Space> },
-          ]}
+          options={STATUS_OPTIONS.map((opt) => ({
+            value: opt.value,
+            label: statusOption(opt),
+          }))}
         />
       ),
     },
@@ -52,31 +56,23 @@ export function TeamView({ feedbacks, onUpdateStatus }: TeamViewProps) {
   return (
     <div className={styles.wrapper}>
       <div className={styles.header}>
-        <div className={styles.headerText}>
+        <div className={styles['header-text']}>
           <Title level={2} className={styles.title}>Talepler ve Aksiyonlar</Title>
           <Text className={styles.subtitle}>Operasyonel Durum Yönetim Ekranı</Text>
         </div>
 
-        <Card
-          variant="borderless"
-          size="small"
-          style={{ borderRadius: 20, background: '#fff', boxShadow: '0 8px 24px rgba(0,40,85,0.04)' }}
-        >
-          <Space
-            split={<div className={styles.divider} />}
-            size="large"
-            style={{ padding: '4px 12px' }}
-          >
-            <div style={{ textAlign: 'center' }}>
-              <Text className={styles.statLabel}>TOPLAM HAVUZ</Text>
+        <Card variant="borderless" size="small" className={styles['stat-card']}>
+          <Space separator={<div className={styles.divider} />} size="large" className={styles['stat-space']}>
+            <div className={styles['stat-item']}>
+              <Text className={styles['stat-label']}>TOPLAM HAVUZ</Text>
               <br />
-              <Text strong className={styles.statValue}>{feedbacks.length}</Text>
+              <Text strong className={styles['stat-value']}>{feedbacks.length}</Text>
             </div>
-            <div style={{ textAlign: 'center' }}>
-              <Text style={{ fontSize: 10, fontWeight: 900, color: '#faad14' }}>BEKLEYEN</Text>
+            <div className={styles['stat-item']}>
+              <Text className={styles['stat-label-pending']}>BEKLEYEN</Text>
               <br />
-              <Text strong className={styles.statValuePending}>
-                {feedbacks.filter((f) => f.status === 'awaiting').length}
+              <Text strong className={styles['stat-value-pending']}>
+                {feedbacks.filter((f) => f.status === 'AWAITING').length}
               </Text>
             </div>
           </Space>

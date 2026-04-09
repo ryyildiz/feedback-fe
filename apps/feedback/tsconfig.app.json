@@ -2,8 +2,9 @@
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "outDir": "dist",
-    "lib": ["DOM", "DOM.Iterable", "ES2019"],
-    "types": ["@react-router/node", "vite/client", "node"],
+    "module": "esnext",
+    "lib": ["DOM", "DOM.Iterable", "ES2022"],
+    "types": ["@react-router/node", "vite/client", "node", "@testing-library/jest-dom"],
     "esModuleInterop": true,
     "jsx": "react-jsx",
     "resolveJsonModule": true,
@@ -13,6 +14,7 @@
     "tsBuildInfoFile": "dist/tsconfig.app.tsbuildinfo"
   },
   "include": [
+    "vite.config.mts",
     "app/**/*.ts",
     "app/**/*.tsx",
     "app/**/*.js",

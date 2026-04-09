@@ -1,45 +1,74 @@
 .overlay {
   position: fixed;
-  bottom: 40px;
-  right: 40px;
+  bottom: 2.5rem;
+  right: 2.5rem;
   z-index: 2000;
-  width: 400px;
-  height: 580px;
+  width: 25rem;
+  height: 36.25rem;
   display: flex;
   flex-direction: column;
   animation: fadeIn 0.4s ease-out;
 }
 
-.panelHeader {
+.card {
+  height: 100%;
+  width: 100%;
+  border-radius: 2.5rem;
+  box-shadow: 0 2.5rem 5rem -0.9375rem rgba(0, 40, 85, 0.35);
+  overflow: hidden;
+}
+
+.card-body {
+  padding: 1.5rem;
+  height: calc(100% - 4.625rem);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.card-header {
+  background: #002855;
+  padding: 1.125rem 1.5rem;
+  border: 0;
+}
+
+.panel-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 100%;
 }
 
-.headerIcon {
+.header-icon {
   background: #ffd200;
-  padding: 10px;
-  border-radius: 14px;
+  padding: 0.625rem;
+  border-radius: 0.875rem;
   display: flex;
 }
 
-.panelTitle {
+.header-text {
+  text-align: left;
+}
+
+.panel-title {
   color: #fff;
   display: block;
   line-height: 1.2;
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 700;
 }
 
-.panelSubtitle {
+.panel-subtitle {
   color: rgba(255, 255, 255, 0.6);
-  font-size: 10px;
-  text-transform: uppercase;
+  font-size: 0.825rem;
   font-weight: 700;
+}
+
+.close-icon {
+  color: #fff;
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
+  from { opacity: 0; transform: translateY(0.625rem); }
   to   { opacity: 1; transform: translateY(0); }
 }

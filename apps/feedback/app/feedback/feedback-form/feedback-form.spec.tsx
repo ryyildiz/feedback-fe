@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event';
 import { describe, it, expect, vi } from 'vitest';
 import { FeedbackForm } from './feedback-form';
 
-const emptyForm = { topic: '', feedback: '' };
+const emptyForm = { issueType: '', feedback: '', capturedUrl: 'http://localhost/', userId: 'user-test' };
 
 describe('FeedbackForm', () => {
   it('renders all topic cards', () => {
@@ -24,13 +24,13 @@ describe('FeedbackForm', () => {
     const onChange = vi.fn();
     render(<FeedbackForm formData={emptyForm} onChange={onChange} onSubmit={vi.fn()} />);
     await userEvent.click(screen.getByText('Hata'));
-    expect(onChange).toHaveBeenCalledWith({ topic: 'hata', feedback: '' });
+    expect(onChange).toHaveBeenCalledWith({ issueType: 'hata', feedback: '', capturedUrl: 'http://localhost/', userId: 'user-test' });
   });
 
   it('submit button is enabled when both topic and feedback are filled', () => {
     render(
       <FeedbackForm
-        formData={{ topic: 'hata', feedback: 'Bir hata var' }}
+        formData={{ issueType: 'hata', feedback: 'Bir hata var', capturedUrl: 'http://localhost/', userId: 'user-test' }}
         onChange={vi.fn()}
         onSubmit={vi.fn()}
       />
@@ -43,7 +43,7 @@ describe('FeedbackForm', () => {
     const onSubmit = vi.fn();
     render(
       <FeedbackForm
-        formData={{ topic: 'oneri', feedback: 'Güzel öneri' }}
+        formData={{ issueType: 'oneri', feedback: 'Güzel öneri', capturedUrl: 'http://localhost/', userId: 'user-test' }}
         onChange={vi.fn()}
         onSubmit={onSubmit}
       />

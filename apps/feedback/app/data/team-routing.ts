@@ -1,5 +1,5 @@
 export interface TeamRoute {
-  pathPattern: string;   // URL içinde aranacak segment
+  pathPattern: string;
   teamId: string;
   teamLabel: string;
 }
@@ -11,7 +11,6 @@ export const TEAM_ROUTING: TeamRoute[] = [
   { pathPattern: '/superonline', teamId: 'altyapi-ekibi', teamLabel: 'Altyapı Ekibi' },
 ];
 
-/** URL'e bakarak hangi ekibe ait olduğunu döner. Eşleşme yoksa 'Genel' */
 export function resolveTeamByUrl(url: string): string {
   const match = TEAM_ROUTING.find((r) => url.includes(r.pathPattern));
   return match ? match.teamLabel : 'Genel';

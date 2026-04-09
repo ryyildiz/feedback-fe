@@ -34,3 +34,23 @@
   display: inline-block;
   line-height: 1.6;
 }
+
+.loading-state {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 6rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #64748b;
+}
+
+.error-state {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 6rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #ef4444;
+}
