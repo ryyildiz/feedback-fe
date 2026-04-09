@@ -82,7 +82,87 @@
   width: 11.875rem;
 }
 
+// ── AI Analiz FAB ─────────────────────────────────────────────────
+.ai-fab {
+  position: fixed;
+  bottom: 2.5rem;
+  right: 2.5rem;
+  z-index: 100;
+
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  padding: 0.75rem 1.375rem;
+  border: none;
+  border-radius: 3rem;
+  cursor: pointer;
+
+  background: linear-gradient(135deg, #002855 0%, #0057b8 100%);
+  color: #fff;
+  font-family: 'Noto Sans', sans-serif;
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+
+  box-shadow: 0 0.5rem 1.75rem rgba(0, 40, 85, 0.35);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+
+  &:hover:not(:disabled) {
+    transform: translateY(-0.125rem);
+    box-shadow: 0 0.75rem 2rem rgba(0, 87, 184, 0.45);
+  }
+
+  &:active:not(:disabled) {
+    transform: translateY(0);
+  }
+
+  &:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+}
+
+.ai-fab-icon {
+  font-size: 1rem;
+}
+
+.ai-fab-label {
+  white-space: nowrap;
+}
+
+.ai-fab-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.25rem;
+  height: 1.25rem;
+  padding: 0 0.3rem;
+  border-radius: 0.625rem;
+  background: #faad14;
+  color: #002855;
+  font-size: 0.6875rem;
+  font-weight: 900;
+  line-height: 1;
+  margin-left: 0.125rem;
+}
+
+.ai-fab-spinner {
+  display: inline-block;
+  width: 1rem;
+  height: 1rem;
+  border: 0.15rem solid rgba(255, 255, 255, 0.4);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(0.625rem); }
   to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
 }

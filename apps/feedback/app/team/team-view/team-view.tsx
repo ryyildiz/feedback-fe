@@ -1,5 +1,8 @@
-import { Card, Select, Space, Table, Typography } from 'antd';
-import type { Feedback, FeedbackStatus } from '../../types';
+import { useCallback, useState } from 'react';
+import axios from 'axios';
+import { Card, Select, Space, Table, Tooltip, Typography, notification } from 'antd';
+import { ThunderboltFilled } from '@ant-design/icons';
+import type { Feedback, FeedbackStatus, TriggerAnalysisResponse } from '../../types';
 import styles from './team-view.module.scss';
 
 const { Title, Text } = Typography;
@@ -24,6 +27,48 @@ const statusOption = (opt: typeof STATUS_OPTIONS[number]) => (
 );
 
 export function TeamView({ feedbacks, onUpdateStatus }: TeamViewProps) {
+  const [notifApi, contextHolder] = notification.useNotification();
+
+  const [isTriggering, setIsTriggering] = useState(false);
+
+  const handleTriggerAnalysis = useCallback(async () => {
+    const unanalyzedIds = feedbacks
+      .filter((f) => !f.isAnalysis)
+      .map((f) => f.id);
+
+    if (unanalyzedIds.length === 0) {
+      notifApi.info({
+        message: 'Analiz Yapılacak Kayıt Yok',
+        description: 'Tüm geri bildirimler zaten analiz edilmiş.',
+        placement: 'bottomRight',
+      });
+      return;
+    }
+
+    setIsTriggering(true);
+    try {
+      const { data } = await axios.post<TriggerAnalysisResponse>(
+        'http://localhost:8080/api/v1/analyses/trigger',
+        { feedbackIds: unanalyzedIds },
+      );
+      notifApi.success({
+        message: 'Analiz Başlatıldı',
+        description: `${data.triggeredCount} geri bildirim Gemini analizine gönderildi.`,
+        placement: 'bottomRight',
+        duration: 4,
+      });
+    } catch {
+      notifApi.error({
+        message: 'Analiz Hatası',
+        description: 'Analiz tetiklenirken bir hata oluştu. Lütfen tekrar deneyin.',
+        placement: 'bottomRight',
+        duration: 5,
+      });
+    } finally {
+      setIsTriggering(false);
+    }
+  }, [feedbacks, notifApi]);
+
   const columns = [
     {
       title: 'ID',
@@ -53,8 +98,11 @@ export function TeamView({ feedbacks, onUpdateStatus }: TeamViewProps) {
     },
   ];
 
+  const pendingCount = feedbacks.filter((f) => !f.isAnalysis).length;
+
   return (
     <div className={styles.wrapper}>
+      {contextHolder}
       <div className={styles.header}>
         <div className={styles['header-text']}>
           <Title level={2} className={styles.title}>Talepler ve Aksiyonlar</Title>
@@ -86,6 +134,30 @@ export function TeamView({ feedbacks, onUpdateStatus }: TeamViewProps) {
         pagination={false}
         className="custom-table"
       />
+
+      <Tooltip
+        title={pendingCount === 0 ? 'Analiz edilecek kayıt yok' : undefined}
+        placement="left"
+      >
+        <button
+          className={styles['ai-fab']}
+          onClick={handleTriggerAnalysis}
+          disabled={isTriggering || pendingCount === 0}
+          aria-label="Gemini ile analiz başlat"
+        >
+          {isTriggering ? (
+            <span className={styles['ai-fab-spinner']} />
+          ) : (
+            <ThunderboltFilled className={styles['ai-fab-icon']} />
+          )}
+          <span className={styles['ai-fab-label']}>
+            {isTriggering ? 'Analiz ediliyor...' : 'AI Analiz'}
+          </span>
+          {pendingCount > 0 && !isTriggering && (
+            <span className={styles['ai-fab-badge']}>{pendingCount}</span>
+          )}
+        </button>
+      </Tooltip>
     </div>
   );
 }
