@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useLocation } from 'react-router';
 import { ConfigProvider } from 'antd';
 import type { Role } from '../../types';
-import { MOCK_USER } from '../../data/mock-user';
+import { MOCK_USER } from '../../mock/mock-user';
 import { useFeedbackStore } from '../../store/feedback.store';
 import { MainNavbar } from '../main-navbar/main-navbar';
 import { FeedbackFab } from '../../feedback/feedback-fab/feedback-fab';

@@ -21,7 +21,7 @@ const STATUS_OPTIONS: { value: FeedbackStatus; label: string; dot: string }[] = 
 
 const statusOption = (opt: typeof STATUS_OPTIONS[number]) => (
   <Space size={6}>
-    <span style={{ width: '0.5rem', height: '0.5rem', borderRadius: '50%', background: opt.dot, display: 'inline-block', flexShrink: 0 }} />
+    <span className={styles['status-dot']} style={{ background: opt.dot }} />
     <span>{opt.label}</span>
   </Space>
 );

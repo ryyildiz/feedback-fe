@@ -2,7 +2,7 @@ import { Avatar, Segmented, Space, Typography } from 'antd';
 import { TeamOutlined, UserOutlined } from '@ant-design/icons';
 import { NavLink } from 'react-router';
 import type { Role } from '../../types';
-import { MOCK_USER } from '../../data/mock-user';
+import { MOCK_USER } from '../../mock/mock-user';
 import styles from './main-navbar.module.scss';
 
 const { Title, Text } = Typography;

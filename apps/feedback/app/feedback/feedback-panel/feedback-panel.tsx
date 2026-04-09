@@ -25,7 +25,7 @@ export function FeedbackPanel({ onClose }: FeedbackPanelProps) {
           <div className={styles['panel-header']}>
             <Space size="middle">
               <div className={styles['header-icon']}>
-                <StarFilled style={{ color: '#002855' }} />
+                <StarFilled className={styles['star-icon']} />
               </div>
               <div className={styles['header-text']}>
                 <span className={styles['panel-title']}>Birlikte Geliştirelim</span>
