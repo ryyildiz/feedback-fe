@@ -1,0 +1,58 @@
+.wrapper {
+  animation: fadeIn 0.5s ease;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 32px;
+}
+
+.headerText {
+  text-align: left;
+}
+
+.title {
+  margin: 0;
+  font-style: italic;
+  font-weight: 900;
+  color: #002855;
+}
+
+.subtitle {
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: 1px;
+  color: #94a3b8;
+}
+
+.divider {
+  width: 1px;
+  height: 24px;
+  background: #f1f5f9;
+}
+
+.statLabel {
+  font-size: 10px;
+  font-weight: 900;
+  color: #94a3b8;
+}
+
+.statValue {
+  font-size: 20px;
+  color: #002855;
+  font-weight: 700;
+}
+
+.statValuePending {
+  font-size: 20px;
+  color: #faad14;
+  font-weight: 700;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}

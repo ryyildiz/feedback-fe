@@ -1,0 +1,45 @@
+.overlay {
+  position: fixed;
+  bottom: 40px;
+  right: 40px;
+  z-index: 2000;
+  width: 400px;
+  height: 580px;
+  display: flex;
+  flex-direction: column;
+  animation: fadeIn 0.4s ease-out;
+}
+
+.panelHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.headerIcon {
+  background: #ffd200;
+  padding: 10px;
+  border-radius: 14px;
+  display: flex;
+}
+
+.panelTitle {
+  color: #fff;
+  display: block;
+  line-height: 1.2;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.panelSubtitle {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 10px;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}

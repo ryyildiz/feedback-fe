@@ -1,0 +1,15 @@
+{
+  "extends": "./tsconfig.app.json",
+  "compilerOptions": {
+    "types": ["@react-router/node", "vite/client", "node", "@testing-library/jest-dom"],
+    "rootDir": "."
+  },
+  "include": [
+    "vitest.setup.ts",
+    "app/**/*.ts",
+    "app/**/*.tsx",
+    "tests/**/*.ts",
+    "tests/**/*.tsx"
+  ],
+  "exclude": ["dist", "out-tsc"]
+}
