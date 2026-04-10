@@ -1,0 +1,122 @@
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+}
+
+.title {
+  margin: 0 !important;
+  color: #002855 !important;
+  font-size: 0.8125rem !important;
+  font-weight: 900 !important;
+  letter-spacing: 0.03125rem;
+}
+
+.subtitle {
+  font-size: 0.6875rem;
+  margin-top: 0.125rem;
+  display: block;
+}
+
+.scroll-area {
+  max-height: calc(100vh - 12.5rem);
+  overflow-y: auto;
+  padding-right: 0.5rem;
+  margin-top: 1.25rem;
+}
+
+.task-card {
+  position: relative;
+  margin-bottom: 0.75rem;
+  cursor: pointer;
+  border-radius: 1rem;
+  border: 0.0625rem solid #eef2f6;
+  background: #fff;
+  transition: all 0.25s ease;
+  overflow: hidden;
+  display: flex;
+
+  &:hover {
+    transform: translateY(-0.125rem);
+    border-color: #cbd5e1;
+  }
+
+  &.active {
+    background: #f0f7ff;
+    border-color: #002855;
+    border-width: 0.125rem;
+    box-shadow: 0 0.625rem 1.25rem rgba(0, 40, 85, 0.05);
+  }
+}
+
+.severity-bar {
+  width: 0.3125rem;
+  flex-shrink: 0;
+  background-color: var(--sev-bg, #94a3b8);
+}
+
+.card-body {
+  padding: 0.875rem;
+  flex: 1;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.id-badge {
+  font-size: 0.625rem;
+  font-weight: 800;
+  color: #94a3b8;
+}
+
+.severity-tag {
+  font-size: 0.5rem;
+  font-weight: 900;
+  margin: 0;
+  border: none;
+  padding: 0;
+  color: var(--sev-color) !important;
+  background: var(--sev-bg-color, transparent) !important;
+}
+
+.card-title {
+  font-size: 0.8125rem;
+  line-height: 1.4;
+  display: block;
+  height: 2.25rem;
+  overflow: hidden;
+  color: #1e293b;
+}
+
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 0.625rem;
+}
+
+.feedback-count {
+  color: #94a3b8;
+  font-size: 0.625rem;
+  font-weight: 600;
+}
+
+.arrow {
+  font-size: 0.625rem;
+  color: #cbd5e1;
+  transition: color 0.2s;
+}
+
+.arrow-active {
+  color: #002855;
+}
+

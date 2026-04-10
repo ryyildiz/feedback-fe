@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
 import axios from 'axios';
-import { Card, Select, Space, Table, Tooltip, Typography, notification } from 'antd';
+import { Button, Card, Select, Space, Table, Tooltip, Typography, notification } from 'antd';
 import { ThunderboltFilled } from '@ant-design/icons';
 import type { Feedback, FeedbackStatus, TriggerAnalysisResponse } from '../types';
 import styles from './feedback-board.module.scss';
@@ -22,7 +22,7 @@ const STATUS_OPTIONS: { value: FeedbackStatus; label: string; dot: string }[] = 
 
 const statusOption = (opt: typeof STATUS_OPTIONS[number]) => (
   <Space size={6}>
-    <span style={{ width: '0.5rem', height: '0.5rem', borderRadius: '50%', background: opt.dot, display: 'inline-block', flexShrink: 0 }} />
+    <span className={styles['status-dot']} style={{ '--dot-bg': opt.dot } as React.CSSProperties} />
     <span>{opt.label}</span>
   </Space>
 );
@@ -149,7 +149,7 @@ export function FeedbackBoard({ feedbacks, onUpdateStatus }: FeedbackBoardProps)
         title={pendingCount === 0 ? 'Analiz edilecek kayıt yok' : undefined}
         placement="left"
       >
-        <button
+        <Button
           className={styles['ai-fab']}
           onClick={handleTriggerAnalysis}
           disabled={isTriggering || pendingCount === 0}
@@ -166,7 +166,7 @@ export function FeedbackBoard({ feedbacks, onUpdateStatus }: FeedbackBoardProps)
           {pendingCount > 0 && !isTriggering && (
             <span className={styles['ai-fab-badge']}>{pendingCount}</span>
           )}
-        </button>
+        </Button>
       </Tooltip>
     </div>
   );

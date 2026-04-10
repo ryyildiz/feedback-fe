@@ -17,15 +17,12 @@ export function FeedbackPanel({ onClose }: FeedbackPanelProps) {
       <Card
         variant="borderless"
         className={styles.card}
-        styles={{
-          body:   { padding: '1.5rem', height: 'calc(100% - 4.625rem)', display: 'flex', flexDirection: 'column', overflow: 'hidden' },
-          header: { background: '#002855', padding: '1.125rem 1.5rem', border: 0 },
-        }}
+        classNames={{ body: styles['card-body'], header: styles['card-header'] }}
         title={
           <div className={styles['panel-header']}>
             <Space size="middle">
               <div className={styles['header-icon']}>
-                <StarFilled style={{ color: '#002855' }} />
+                <StarFilled className={styles['star-icon']} />
               </div>
               <div className={styles['header-text']}>
                 <span className={styles['panel-title']}>Birlikte Geliştirelim</span>

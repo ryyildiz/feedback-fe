@@ -1,0 +1,63 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.card {
+  border-radius: 1.25rem !important;
+}
+
+.shadow {
+  box-shadow: 0 0.625rem 1.875rem rgba(0, 40, 85, 0.06) !important;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-label {
+  font-size: 0.625rem;
+  font-weight: 800;
+  color: #94a3b8;
+  letter-spacing: 0.03125rem;
+  text-transform: uppercase;
+}
+
+.alert {
+  padding: 0.875rem;
+  background: #fffbeb;
+  border-radius: 1rem;
+  border: 0.0625rem solid #ffe58f;
+  margin-top: 1rem;
+}
+
+.alert-icon {
+  color: #faad14;
+  margin-top: 0.1875rem;
+}
+
+.alert-text {
+  font-size: 0.6875rem;
+  color: #856404;
+  line-height: 1.4;
+}
+
+.select-full {
+  width: 100%;
+}
+
+.create-btn {
+  height: 4.5rem !important;
+  background: #ffd200 !important;
+  color: #002855 !important;
+  border: none !important;
+  font-weight: 900 !important;
+  border-radius: 1.25rem !important;
+  margin-top: 1.25rem;
+  font-size: 0.875rem !important;
+  box-shadow: 0 1.25rem 2.5rem rgba(0, 40, 85, 0.06) !important;
+}
+
