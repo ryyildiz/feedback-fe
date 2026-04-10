@@ -451,7 +451,7 @@ margin-left: 12px;
                       color: '#002855',
                     }}
                   >
-                    Talepler ve Aksiyonlar
+                    Talepler
                   </Title>
                   <Text
                     type="secondary"

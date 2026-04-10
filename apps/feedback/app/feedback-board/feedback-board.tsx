@@ -1,30 +1,17 @@
 import { useCallback, useState } from 'react';
 import axios from 'axios';
-import { Button, Card, Select, Space, Table, Tooltip, Typography, notification } from 'antd';
+import { Button, Card, Space, Table, Tooltip, Typography, notification } from 'antd';
 import { ThunderboltFilled } from '@ant-design/icons';
-import type { Feedback, FeedbackStatus, TriggerAnalysisResponse } from '../types';
+import type { Feedback, TriggerAnalysisResponse } from '../types';
 import styles from './feedback-board.module.scss';
 
 const { Title, Text } = Typography;
 
 interface FeedbackBoardProps {
   feedbacks: Feedback[];
-  onUpdateStatus: (id: number, status: FeedbackStatus) => void;
 }
 
-const STATUS_OPTIONS: { value: FeedbackStatus; label: string; dot: string }[] = [
-  { value: 'NEW',          label: 'Yeni',           dot: '#a78bfa' },
-  { value: 'RESOLVED',     label: 'Tamamlandı',     dot: '#22c55e' },
-];
-
-const statusOption = (opt: typeof STATUS_OPTIONS[number]) => (
-  <Space size={6}>
-    <span className={styles['status-dot']} style={{ '--dot-bg': opt.dot } as React.CSSProperties} />
-    <span>{opt.label}</span>
-  </Space>
-);
-
-export function FeedbackBoard({ feedbacks, onUpdateStatus }: FeedbackBoardProps) {
+export function FeedbackBoard({ feedbacks }: FeedbackBoardProps) {
   const [notifApi, contextHolder] = notification.useNotification();
 
   const [isTriggering, setIsTriggering] = useState(false);
@@ -72,35 +59,39 @@ export function FeedbackBoard({ feedbacks, onUpdateStatus }: FeedbackBoardProps)
       dataIndex: 'ticketId',
       key: 'ticketId',
       render: (ticketId: string) => (
-        <Text strong className={styles['id-text']}>{ticketId ?? '—'}</Text>
+        <Text strong className={styles['id-text']}>
+          {ticketId ?? '—'}
+        </Text>
       ),
     },
     { title: 'Ekran', dataIndex: 'screenName', key: 'screenName' },
-    { title: 'Görüş', dataIndex: 'feedbackText', key: 'feedbackText', width: '35%' },
+    {
+      title: 'Tür',
+      dataIndex: 'issueType',
+      key: 'issueType',
+      render: (val: string) =>
+        ({
+          BUG: 'Hata',
+          PERFORMANCE: 'Performans',
+          DESIGN: 'Tasarım',
+          SUGGESTION: 'Öneri',
+        })[val] ?? val,
+    },
+    {
+      title: 'Görüş',
+      dataIndex: 'feedbackText',
+      key: 'feedbackText',
+    },
     {
       title: 'Analiz',
       dataIndex: 'isAnalysis',
       key: 'isAnalysis',
       render: (val: boolean) => (
-        <span className={val ? styles['badge-analyzed'] : styles['badge-pending']}>
+        <span
+          className={val ? styles['badge-analyzed'] : styles['badge-pending']}
+        >
           {val ? 'Edildi' : 'Bekliyor'}
         </span>
-      ),
-    },
-    {
-      title: 'Durum',
-      key: 'action',
-      render: (_: unknown, record: Feedback) => (
-        <Select
-          value={record.status}
-          className={`status-select-premium status-${record.status} ${styles.select}`}
-          classNames={{ popup: { root: 'premium-dropdown' } }}
-          onChange={(val) => onUpdateStatus(record.id, val)}
-          options={STATUS_OPTIONS.map((opt) => ({
-            value: opt.value,
-            label: statusOption(opt),
-          }))}
-        />
       ),
     },
   ];
@@ -112,26 +103,52 @@ export function FeedbackBoard({ feedbacks, onUpdateStatus }: FeedbackBoardProps)
       {contextHolder}
       <div className={styles.header}>
         <div className={styles['header-text']}>
-          <Title level={2} className={styles.title}>Talepler ve Aksiyonlar</Title>
+          <Title level={2} className={styles.title}>Talepler</Title>
           <Text className={styles.subtitle}>Operasyonel Durum Yönetim Ekranı</Text>
         </div>
 
-        <Card variant="borderless" size="small" className={styles['stat-card']}>
-          <Space separator={<div className={styles.divider} />} size="large" className={styles['stat-space']}>
-            <div className={styles['stat-item']}>
-              <Text className={styles['stat-label']}>TOPLAM HAVUZ</Text>
-              <br />
-              <Text strong className={styles['stat-value']}>{feedbacks.length}</Text>
-            </div>
-            <div className={styles['stat-item']}>
-              <Text className={styles['stat-label-pending']}>BEKLEYEN</Text>
-              <br />
-              <Text strong className={styles['stat-value-pending']}>
-                {feedbacks.filter((f) => f.status === 'AWAITING').length}
-              </Text>
-            </div>
-          </Space>
-        </Card>
+        <div className={styles['header-right']}>
+          <Card variant="borderless" size="small" className={styles['stat-card']}>
+            <Space separator={<div className={styles.divider} />} size="large" className={styles['stat-space']}>
+              <div className={styles['stat-item']}>
+                <Text className={styles['stat-label']}>TOPLAM HAVUZ</Text>
+                <br />
+                <Text strong className={styles['stat-value']}>{feedbacks.length}</Text>
+              </div>
+              <div className={styles['stat-item']}>
+                <Text className={styles['stat-label-pending']}>BEKLEYEN</Text>
+                <br />
+                <Text strong className={styles['stat-value-pending']}>
+                  {feedbacks.filter((f) => f.status === 'AWAITING').length}
+                </Text>
+              </div>
+            </Space>
+          </Card>
+
+          <Tooltip
+            title={pendingCount === 0 ? 'Analiz edilecek kayıt yok' : undefined}
+            placement="left"
+          >
+            <Button
+              className={styles['ai-fab']}
+              onClick={handleTriggerAnalysis}
+              disabled={isTriggering || pendingCount === 0}
+              aria-label="Gemini ile analiz başlat"
+            >
+              {isTriggering ? (
+                <span className={styles['ai-fab-spinner']} />
+              ) : (
+                <ThunderboltFilled className={styles['ai-fab-icon']} />
+              )}
+              <span className={styles['ai-fab-label']}>
+                {isTriggering ? 'Analiz ediliyor...' : 'AI Analiz'}
+              </span>
+              {pendingCount > 0 && !isTriggering && (
+                <span className={styles['ai-fab-badge']}>{pendingCount}</span>
+              )}
+            </Button>
+          </Tooltip>
+        </div>
       </div>
 
       <Table
@@ -141,30 +158,6 @@ export function FeedbackBoard({ feedbacks, onUpdateStatus }: FeedbackBoardProps)
         pagination={false}
         className="custom-table"
       />
-
-      <Tooltip
-        title={pendingCount === 0 ? 'Analiz edilecek kayıt yok' : undefined}
-        placement="left"
-      >
-        <Button
-          className={styles['ai-fab']}
-          onClick={handleTriggerAnalysis}
-          disabled={isTriggering || pendingCount === 0}
-          aria-label="Gemini ile analiz başlat"
-        >
-          {isTriggering ? (
-            <span className={styles['ai-fab-spinner']} />
-          ) : (
-            <ThunderboltFilled className={styles['ai-fab-icon']} />
-          )}
-          <span className={styles['ai-fab-label']}>
-            {isTriggering ? 'Analiz ediliyor...' : 'AI Analiz'}
-          </span>
-          {pendingCount > 0 && !isTriggering && (
-            <span className={styles['ai-fab-badge']}>{pendingCount}</span>
-          )}
-        </Button>
-      </Tooltip>
     </div>
   );
 }

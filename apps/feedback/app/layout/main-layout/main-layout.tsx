@@ -48,7 +48,6 @@ export function MainLayout() {
     setFormData,
     resetForm,
     fetchFeedbacks,
-    updateFeedbackStatus,
   } = useFeedbackStore();
 
   const handleRoleChange = (role: Role) => {
@@ -108,10 +107,7 @@ export function MainLayout() {
               <span>{fetchError}</span>
             </div>
           ) : (
-            <FeedbackBoard
-              feedbacks={feedbacks}
-              onUpdateStatus={updateFeedbackStatus}
-            />
+            <FeedbackBoard feedbacks={feedbacks} />
           )}
         </main>
 

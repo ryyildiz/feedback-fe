@@ -5,8 +5,14 @@
 .header {
   display: flex;
   justify-content: space-between;
-  align-items: flex-end;
+  align-items: center;
   margin-bottom: 2rem;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
 }
 
 .header-text {
@@ -72,15 +78,6 @@
   font-weight: 700;
 }
 
-.status-dot {
-  width: 0.5rem;
-  height: 0.5rem;
-  border-radius: 50%;
-  display: inline-block;
-  flex-shrink: 0;
-  background: var(--dot-bg, #ccc);
-}
-
 .id-text {
   font-style: italic;
   color: #002855;
@@ -113,11 +110,6 @@
 
 // ── AI Analiz FAB ─────────────────────────────────────────────────
 .ai-fab {
-  position: fixed;
-  bottom: 2.5rem;
-  right: 2.5rem;
-  z-index: 100;
-
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -129,28 +121,9 @@
 
   background: linear-gradient(135deg, #002855 0%, #0057b8 100%);
   color: #fff;
-  font-family: 'Noto Sans', sans-serif;
   font-size: 0.875rem;
   font-weight: 700;
   letter-spacing: 0.02em;
-
-  box-shadow: 0 0.5rem 1.75rem rgba(0, 40, 85, 0.35);
-  transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
-
-  &:hover:not(:disabled) {
-    transform: translateY(-0.125rem);
-    box-shadow: 0 0.75rem 2rem rgba(0, 87, 184, 0.45);
-  }
-
-  &:active:not(:disabled) {
-    transform: translateY(0);
-  }
-
-  &:disabled {
-    opacity: 0.45;
-    cursor: not-allowed;
-    box-shadow: none;
-  }
 }
 
 .ai-fab-icon {
@@ -185,11 +158,6 @@
   border-top-color: #fff;
   border-radius: 50%;
   animation: spin 0.7s linear infinite;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(0.625rem); }
-  to   { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes spin {
