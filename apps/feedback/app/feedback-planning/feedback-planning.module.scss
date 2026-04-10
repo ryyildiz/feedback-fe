@@ -6,6 +6,19 @@
   font-family: 'Inter', -apple-system, sans-serif;
 }
 
+.loading-state,
+.error-state {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 20rem;
+}
+
+.error-state {
+  color: #ef4444;
+  font-weight: 600;
+}
+
 .layout {
   display: grid;
   grid-template-columns: 19.375rem 1fr;

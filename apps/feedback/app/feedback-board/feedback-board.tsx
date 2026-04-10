@@ -119,7 +119,7 @@ export function FeedbackBoard({ feedbacks }: FeedbackBoardProps) {
                 <Text className={styles['stat-label-pending']}>BEKLEYEN</Text>
                 <br />
                 <Text strong className={styles['stat-value-pending']}>
-                  {feedbacks.filter((f) => f.status === 'AWAITING').length}
+                  {pendingCount}
                 </Text>
               </div>
             </Space>

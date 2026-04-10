@@ -58,3 +58,12 @@ export async function updateFeedback(
 export async function deleteFeedback(id: number): Promise<void> {
   await api.delete(`/feedbacks/${id}`);
 }
+
+/**
+ * POST /api/v1/analyses/trigger
+ * Gemini analizini tetikler ve analiz sonuçlarını döner.
+ */
+export async function triggerAnalysis(): Promise<import('../feedback-planning/feedback-planning.types').PlanningTask[]> {
+  const response = await api.post<import('../feedback-planning/feedback-planning.types').PlanningTask[]>('/analyses/trigger');
+  return response.data;
+}

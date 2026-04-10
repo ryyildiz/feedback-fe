@@ -100,7 +100,7 @@ export function MainLayout() {
             <FeedbackPlanning />
           ) : isLoading ? (
             <div className={styles['loading-state']}>
-              <span>Yukleniyor...</span>
+              <span>Yükleniyor...</span>
             </div>
           ) : fetchError ? (
             <div className={styles['error-state']}>

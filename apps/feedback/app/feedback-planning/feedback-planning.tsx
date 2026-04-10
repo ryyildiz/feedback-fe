@@ -1,22 +1,34 @@
-import { useMemo, useState } from 'react';
-import { Badge, ConfigProvider, Typography, notification } from 'antd';
+import { useEffect, useMemo, useState } from 'react';
+import { Badge, ConfigProvider, Spin, Typography, notification } from 'antd';
 import { ThunderboltOutlined } from '@ant-design/icons';
 import { TaskSidebar } from './task-sidebar/task-sidebar';
 import { JiraEditor } from './jira-editor/jira-editor';
 import { ActionPanel } from './action-panel/action-panel';
 import {
-  MOCK_PLANNING_TASKS,
   TEAM_OPTIONS,
   type PlanningTask,
 } from './feedback-planning.types';
+import { triggerAnalysis } from '../services/feedback.service';
 import styles from './feedback-planning.module.scss';
 
 const { Text } = Typography;
 
 const FeedbackPlanning = () => {
-  const [selectedId, setSelectedId] = useState(1);
+  const [selectedId, setSelectedId] = useState<number | null>(null);
   const [team, setTeam] = useState('fatura-ekibi');
-  const [tasks, setTasks] = useState<PlanningTask[]>(MOCK_PLANNING_TASKS);
+  const [tasks, setTasks] = useState<PlanningTask[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [fetchError, setFetchError] = useState<string | null>(null);
+
+  useEffect(() => {
+    triggerAnalysis()
+      .then((data) => {
+        setTasks(data);
+        if (data.length > 0) setSelectedId(data[0].id);
+      })
+      .catch(() => setFetchError('Analiz verileri yüklenirken bir hata oluştu.'))
+      .finally(() => setIsLoading(false));
+  }, []);
 
   const activeTask = useMemo(
     () => tasks.find((t) => t.id === selectedId) ?? tasks[0],
@@ -64,22 +76,32 @@ const FeedbackPlanning = () => {
       theme={{ token: { colorPrimary: '#002855', borderRadius: 16 } }}
     >
       <div className={styles['wrapper']}>
-        <div className={styles['layout']}>
-          <TaskSidebar
-            tasks={tasks}
-            selectedId={selectedId}
-            onSelect={setSelectedId}
-          />
-          <div className={styles['editor-layout']}>
-            <JiraEditor task={activeTask} onUpdate={handleUpdate} />
-            <ActionPanel
-              task={activeTask}
-              team={team}
-              onTeamChange={setTeam}
-              onCreate={handleJiraCreate}
-            />
+        {isLoading ? (
+          <div className={styles['loading-state']}>
+            <Spin size="large" />
           </div>
-        </div>
+        ) : fetchError ? (
+          <div className={styles['error-state']}>
+            <span>{fetchError}</span>
+          </div>
+        ) : (
+          <div className={styles['layout']}>
+            <TaskSidebar
+              tasks={tasks}
+              selectedId={selectedId ?? tasks[0]?.id}
+              onSelect={setSelectedId}
+            />
+            <div className={styles['editor-layout']}>
+              <JiraEditor task={activeTask} onUpdate={handleUpdate} />
+              <ActionPanel
+                task={activeTask}
+                team={team}
+                onTeamChange={setTeam}
+                onCreate={handleJiraCreate}
+              />
+            </div>
+          </div>
+        )}
       </div>
     </ConfigProvider>
   );
