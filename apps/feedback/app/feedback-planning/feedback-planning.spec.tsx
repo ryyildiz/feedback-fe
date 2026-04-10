@@ -1,6 +1,6 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
-import FeedbackPlanning from './feedback-planning';
+import { FeedbackPlanning } from './feedback-planning';
 import * as service from '../services/feedback.service';
 import type { PlanningTask } from './feedback-planning.types';
 

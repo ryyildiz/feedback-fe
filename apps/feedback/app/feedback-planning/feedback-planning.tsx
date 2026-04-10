@@ -13,7 +13,7 @@ import styles from './feedback-planning.module.scss';
 
 const { Text } = Typography;
 
-const FeedbackPlanning = () => {
+export const FeedbackPlanning = () => {
   const [selectedId, setSelectedId] = useState<number | null>(null);
   const [team, setTeam] = useState('fatura-ekibi');
   const [tasks, setTasks] = useState<PlanningTask[]>([]);
@@ -106,6 +106,3 @@ const FeedbackPlanning = () => {
     </ConfigProvider>
   );
 };
-
-export { FeedbackPlanning };
-export default FeedbackPlanning;
