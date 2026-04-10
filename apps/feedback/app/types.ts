@@ -5,6 +5,7 @@ export type IssueType = 'BUG' | 'PERFORMANCE' | 'DESIGN' | 'SUGGESTION';
 
 /** PUT /feedbacks/:id → status değerleri */
 export type FeedbackStatus =
+  | 'NEW'
   | 'AWAITING'
   | 'IN_PROGRESS'
   | 'RESOLVED'
@@ -20,6 +21,7 @@ export type Sentiment = 'positive' | 'neutral' | 'negative' | 'frustrated';
 /** GET /feedbacks veya GET /feedbacks/:id yanıtı */
 export interface Feedback {
   id: number;
+  ticketId?: string;
   issueType: IssueType;
   screenName: string;
   url: string;
@@ -27,6 +29,7 @@ export interface Feedback {
   status: FeedbackStatus;
   createdBy: string;
   createdAt?: string;
+  updatedAt?: string;
   priority?: Priority;
   isAnalysis?: boolean;
 }
@@ -57,4 +60,4 @@ export interface TriggerAnalysisResponse {
 
 // ---------- UI Yardımcı Tipleri ----------
 
-export type Role = 'user' | 'team';
+export type Role = 'user' | 'team' | 'action';

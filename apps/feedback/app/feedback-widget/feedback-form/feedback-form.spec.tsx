@@ -27,7 +27,7 @@ describe('FeedbackForm', () => {
     expect(onChange).toHaveBeenCalledWith({ issueType: 'hata', feedback: '', capturedUrl: 'http://localhost/', userId: 'user-test' });
   });
 
-  it('submit button is enabled when both topic and feedback are filled', () => {
+  it('submit button is enabled when both topic and feedback-widget are filled', () => {
     render(
       <FeedbackForm
         formData={{ issueType: 'hata', feedback: 'Bir hata var', capturedUrl: 'http://localhost/', userId: 'user-test' }}

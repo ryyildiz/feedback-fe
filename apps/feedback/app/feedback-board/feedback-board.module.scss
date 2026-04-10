@@ -82,6 +82,26 @@
   width: 11.875rem;
 }
 
+.badge-analyzed,
+.badge-pending {
+  display: inline-block;
+  padding: 0.2rem 0.6rem;
+  border-radius: 1rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.badge-analyzed {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.badge-pending {
+  background: #fef9c3;
+  color: #a16207;
+}
+
 // ── AI Analiz FAB ─────────────────────────────────────────────────
 .ai-fab {
   position: fixed;

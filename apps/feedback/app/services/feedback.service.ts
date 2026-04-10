@@ -12,7 +12,7 @@ const api = axios.create({
 
 /**
  * GET /api/v1/feedbacks
- * Tüm feedback listesini getirir.
+ * Tüm feedback-widget listesini getirir.
  */
 export async function getFeedbacks(): Promise<Feedback[]> {
   const response = await api.get<Feedback[]>('/feedbacks');
@@ -21,7 +21,7 @@ export async function getFeedbacks(): Promise<Feedback[]> {
 
 /**
  * GET /api/v1/feedbacks/:id
- * Tek bir feedback'i id ile getirir.
+ * Tek bir feedback-widget'i id ile getirir.
  */
 export async function getFeedbackById(id: number): Promise<Feedback> {
   const response = await api.get<Feedback>(`/feedbacks/${id}`);
@@ -30,7 +30,7 @@ export async function getFeedbackById(id: number): Promise<Feedback> {
 
 /**
  * POST /api/v1/feedbacks
- * Yeni feedback oluşturur.
+ * Yeni feedback-widget oluşturur.
  * Body: { issueType, screenName, url, feedbackText, createdBy }
  */
 export async function createFeedback(data: CreateFeedbackRequest): Promise<Feedback> {

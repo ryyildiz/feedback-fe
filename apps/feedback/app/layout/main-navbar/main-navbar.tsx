@@ -1,8 +1,8 @@
 import { Avatar, Segmented, Space, Typography } from 'antd';
-import { TeamOutlined, UserOutlined } from '@ant-design/icons';
+import { RocketOutlined, TeamOutlined, UserOutlined } from '@ant-design/icons';
 import { NavLink } from 'react-router';
 import type { Role } from '../../types';
-import { MOCK_USER } from '../../data/mock-user';
+import { MOCK_USER } from '../../mock/mock-user';
 import styles from './main-navbar.module.scss';
 
 const { Title, Text } = Typography;
@@ -43,7 +43,10 @@ export function MainNavbar({ currentRole, onRoleChange }: MainNavbarProps) {
               to={link.to}
               end
               className={({ isActive }) =>
-                [styles['page-link'], isActive ? styles['page-link-active'] : ''].join(' ')
+                [
+                  styles['page-link'],
+                  isActive ? styles['page-link-active'] : '',
+                ].join(' ')
               }
             >
               {link.label}
@@ -52,9 +55,13 @@ export function MainNavbar({ currentRole, onRoleChange }: MainNavbarProps) {
         </div>
 
         <div className={styles['nav-right']}>
-          <Avatar size={32} className={styles.avatar}>{MOCK_USER.initials}</Avatar>
+          <Avatar size={32} className={styles.avatar}>
+            {MOCK_USER.initials}
+          </Avatar>
           <div className={styles['user-info']}>
-            <Text strong className={styles['user-name']}>{MOCK_USER.name}</Text>
+            <Text strong className={styles['user-name']}>
+              {MOCK_USER.name}
+            </Text>
             <Text className={styles['user-role']}>{MOCK_USER.role}</Text>
           </div>
         </div>
@@ -64,8 +71,21 @@ export function MainNavbar({ currentRole, onRoleChange }: MainNavbarProps) {
           value={currentRole}
           onChange={(value) => onRoleChange(value as Role)}
           options={[
-            { label: 'Müşteri Görünümü', value: 'user', icon: <UserOutlined /> },
-            { label: 'Teknik Ekip Havuzu', value: 'team', icon: <TeamOutlined /> },
+            {
+              label: 'Müşteri Görünümü',
+              value: 'user',
+              icon: <UserOutlined />,
+            },
+            {
+              label: 'Deneyim Havuzu',
+              value: 'action',
+              icon: <TeamOutlined />,
+            },
+            {
+              label: 'Akıllı Planlama',
+              value: 'team',
+              icon: <RocketOutlined />,
+            },
           ]}
           className={styles.segmented}
         />

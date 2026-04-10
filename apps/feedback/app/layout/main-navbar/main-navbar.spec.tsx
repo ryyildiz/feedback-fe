@@ -19,13 +19,13 @@ describe('MainNavbar', () => {
   it('renders role segments', () => {
     renderNavbar();
     expect(screen.getByText('Müşteri Görünümü')).toBeTruthy();
-    expect(screen.getByText('Teknik Ekip Havuzu')).toBeTruthy();
+    expect(screen.getByText('Geri Bildirim Takip')).toBeTruthy();
   });
 
   it('calls onRoleChange when segment is clicked', async () => {
     const onRoleChange = vi.fn();
     renderNavbar({ onRoleChange });
-    await userEvent.click(screen.getByText('Teknik Ekip Havuzu'));
+    await userEvent.click(screen.getByText('Geri Bildirim Takip'));
     expect(onRoleChange).toHaveBeenCalledWith('team');
   });
 });

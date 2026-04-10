@@ -10,7 +10,7 @@ const mockSetFormData = vi.fn();
 const mockResetForm = vi.fn();
 const mockUpdateFeedbackStatus = vi.fn();
 
-vi.mock('../../store/feedback.store', () => ({
+vi.mock('../../store/feedback-widget.store', () => ({
   useFeedbackStore: () => ({
     feedbacks: [],
     isLoading: false,
@@ -28,12 +28,12 @@ vi.mock('../main-navbar/main-navbar', () => ({
     <div>
       <span data-testid="current-role">{currentRole}</span>
       <button onClick={() => onRoleChange('user')}>Müşteri Görünümü</button>
-      <button onClick={() => onRoleChange('team')}>Teknik Ekip Havuzu</button>
+      <button onClick={() => onRoleChange('team')}>Geri Bildirim Takip</button>
     </div>
   ),
 }));
 
-vi.mock('../../feedback/feedback-fab/feedback-fab', () => ({
+vi.mock('../../feedback-widget/feedback-widget-fab/feedback-widget-fab', () => ({
   FeedbackFab: ({ onClick }: { onClick: () => void }) => (
     <button onClick={onClick} data-testid="feedback-fab">
       FİKRİNİ PAYLAŞ
@@ -41,7 +41,7 @@ vi.mock('../../feedback/feedback-fab/feedback-fab', () => ({
   ),
 }));
 
-vi.mock('../../feedback/feedback-panel/feedback-panel', () => ({
+vi.mock('../../feedback-widget/feedback-widget-panel/feedback-widget-panel', () => ({
   FeedbackPanel: ({ onClose }: { onClose: () => void }) => (
     <div data-testid="feedback-panel">
       <button onClick={onClose} data-testid="panel-close-btn">Kapat</button>
@@ -49,8 +49,8 @@ vi.mock('../../feedback/feedback-panel/feedback-panel', () => ({
   ),
 }));
 
-vi.mock('../../team/team-view/team-view', () => ({
-  TeamView: () => <div data-testid="team-view">TeamView</div>,
+vi.mock('../../feedback-widget-board/feedback-widget-board', () => ({
+  FeedbackBoard: () => <div data-testid="feedback-board">FeedbackBoard</div>,
 }));
 
 // ── Helpers ────────────────────────────────────────────────────────────────
@@ -85,12 +85,12 @@ describe('MainLayout', () => {
 
     it('renders FeedbackFab in user mode', () => {
       renderLayout('/');
-      expect(screen.getByTestId('feedback-fab')).toBeTruthy();
+      expect(screen.getByTestId('feedback-widget-fab')).toBeTruthy();
     });
 
     it('does NOT render TeamView in user mode', () => {
       renderLayout('/');
-      expect(screen.queryByTestId('team-view')).toBeNull();
+      expect(screen.queryByTestId('feedback-widget-board')).toBeNull();
     });
 
     it('does NOT call fetchFeedbacks on mount', () => {
@@ -102,14 +102,14 @@ describe('MainLayout', () => {
   describe('panel open / close', () => {
     it('opens FeedbackPanel and hides FAB when FAB is clicked', async () => {
       renderLayout('/');
-      await userEvent.click(screen.getByTestId('feedback-fab'));
-      expect(screen.getByTestId('feedback-panel')).toBeTruthy();
-      expect(screen.queryByTestId('feedback-fab')).toBeNull();
+      await userEvent.click(screen.getByTestId('feedback-widget-fab'));
+      expect(screen.getByTestId('feedback-widget-panel')).toBeTruthy();
+      expect(screen.queryByTestId('feedback-widget-fab')).toBeNull();
     });
 
     it('calls setFormData when FAB is clicked', async () => {
       renderLayout('/');
-      await userEvent.click(screen.getByTestId('feedback-fab'));
+      await userEvent.click(screen.getByTestId('feedback-widget-fab'));
       expect(mockSetFormData).toHaveBeenCalledWith(
         expect.objectContaining({ screenName: 'Ana Sayfa' })
       );
@@ -117,29 +117,29 @@ describe('MainLayout', () => {
 
     it('closes the panel and shows FAB when onClose is triggered', async () => {
       renderLayout('/');
-      await userEvent.click(screen.getByTestId('feedback-fab'));
+      await userEvent.click(screen.getByTestId('feedback-widget-fab'));
       await userEvent.click(screen.getByTestId('panel-close-btn'));
-      expect(screen.queryByTestId('feedback-panel')).toBeNull();
-      expect(screen.getByTestId('feedback-fab')).toBeTruthy();
+      expect(screen.queryByTestId('feedback-widget-panel')).toBeNull();
+      expect(screen.getByTestId('feedback-widget-fab')).toBeTruthy();
     });
   });
 
   describe('role switching', () => {
-    it('switches to team role and shows TeamView', async () => {
+    it('switches to team role and shows FeedbackBoard', async () => {
       renderLayout('/');
-      await userEvent.click(screen.getByText('Teknik Ekip Havuzu'));
-      expect(screen.getByTestId('team-view')).toBeTruthy();
+      await userEvent.click(screen.getByText('Geri Bildirim Takip'));
+      expect(screen.getByTestId('feedback-widget-board')).toBeTruthy();
     });
 
     it('calls fetchFeedbacks when switching to team role', async () => {
       renderLayout('/');
-      await userEvent.click(screen.getByText('Teknik Ekip Havuzu'));
+      await userEvent.click(screen.getByText('Geri Bildirim Takip'));
       expect(mockFetchFeedbacks).toHaveBeenCalledOnce();
     });
 
     it('does NOT call fetchFeedbacks when switching back to user role', async () => {
       renderLayout('/');
-      await userEvent.click(screen.getByText('Teknik Ekip Havuzu'));
+      await userEvent.click(screen.getByText('Geri Bildirim Takip'));
       vi.clearAllMocks();
       await userEvent.click(screen.getByText('Müşteri Görünümü'));
       expect(mockFetchFeedbacks).not.toHaveBeenCalled();
@@ -147,8 +147,8 @@ describe('MainLayout', () => {
 
     it('hides FeedbackFab in team mode', async () => {
       renderLayout('/');
-      await userEvent.click(screen.getByText('Teknik Ekip Havuzu'));
-      expect(screen.queryByTestId('feedback-fab')).toBeNull();
+      await userEvent.click(screen.getByText('Geri Bildirim Takip'));
+      expect(screen.queryByTestId('feedback-widget-fab')).toBeNull();
     });
   });
 });

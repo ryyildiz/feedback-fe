@@ -2,21 +2,22 @@ import { useCallback, useState } from 'react';
 import axios from 'axios';
 import { Card, Select, Space, Table, Tooltip, Typography, notification } from 'antd';
 import { ThunderboltFilled } from '@ant-design/icons';
-import type { Feedback, FeedbackStatus, TriggerAnalysisResponse } from '../../types';
-import styles from './team-view.module.scss';
+import type { Feedback, FeedbackStatus, TriggerAnalysisResponse } from '../types';
+import styles from './feedback-board.module.scss';
 
 const { Title, Text } = Typography;
 
-interface TeamViewProps {
+interface FeedbackBoardProps {
   feedbacks: Feedback[];
   onUpdateStatus: (id: number, status: FeedbackStatus) => void;
 }
 
 const STATUS_OPTIONS: { value: FeedbackStatus; label: string; dot: string }[] = [
+  { value: 'NEW',          label: 'Yeni',           dot: '#a78bfa' },
   { value: 'AWAITING',     label: 'Beklemede',      dot: '#f97316' },
   { value: 'IN_PROGRESS',  label: 'Planlamaya Al',  dot: '#3b82f6' },
-  { value: 'RESOLVED',     label: 'Tamamlandi',     dot: '#22c55e' },
-  { value: 'CANCELLED',    label: 'Iptal Edildi',   dot: '#ef4444' },
+  { value: 'RESOLVED',     label: 'Tamamlandı',     dot: '#22c55e' },
+  { value: 'CANCELLED',    label: 'İptal Edildi',   dot: '#ef4444' },
 ];
 
 const statusOption = (opt: typeof STATUS_OPTIONS[number]) => (
@@ -26,7 +27,7 @@ const statusOption = (opt: typeof STATUS_OPTIONS[number]) => (
   </Space>
 );
 
-export function TeamView({ feedbacks, onUpdateStatus }: TeamViewProps) {
+export function FeedbackBoard({ feedbacks, onUpdateStatus }: FeedbackBoardProps) {
   const [notifApi, contextHolder] = notification.useNotification();
 
   const [isTriggering, setIsTriggering] = useState(false);
@@ -70,15 +71,25 @@ export function TeamView({ feedbacks, onUpdateStatus }: TeamViewProps) {
 
   const columns = [
     {
-      title: 'ID',
-      dataIndex: 'id',
-      key: 'id',
-      render: (text: string) => (
-        <Text strong className={styles['id-text']}>{text}</Text>
+      title: 'Ticket',
+      dataIndex: 'ticketId',
+      key: 'ticketId',
+      render: (ticketId: string) => (
+        <Text strong className={styles['id-text']}>{ticketId ?? '—'}</Text>
       ),
     },
     { title: 'Ekran', dataIndex: 'screenName', key: 'screenName' },
     { title: 'Görüş', dataIndex: 'feedbackText', key: 'feedbackText', width: '35%' },
+    {
+      title: 'Analiz',
+      dataIndex: 'isAnalysis',
+      key: 'isAnalysis',
+      render: (val: boolean) => (
+        <span className={val ? styles['badge-analyzed'] : styles['badge-pending']}>
+          {val ? 'Edildi' : 'Bekliyor'}
+        </span>
+      ),
+    },
     {
       title: 'Durum',
       key: 'action',

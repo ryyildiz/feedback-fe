@@ -2,12 +2,13 @@ import { useState } from 'react';
 import { useLocation } from 'react-router';
 import { ConfigProvider } from 'antd';
 import type { Role } from '../../types';
-import { MOCK_USER } from '../../data/mock-user';
+import { MOCK_USER } from '../../mock/mock-user';
 import { useFeedbackStore } from '../../store/feedback.store';
 import { MainNavbar } from '../main-navbar/main-navbar';
-import { FeedbackFab } from '../../feedback/feedback-fab/feedback-fab';
-import { FeedbackPanel } from '../../feedback/feedback-panel/feedback-panel';
-import { TeamView } from '../../team/team-view/team-view';
+import { FeedbackFab } from '../../feedback-widget/feedback-fab/feedback-fab';
+import { FeedbackPanel } from '../../feedback-widget/feedback-panel/feedback-panel';
+import { FeedbackBoard } from '../../feedback-board/feedback-board';
+import { FeedbackPlanning } from '../../feedback-planning/feedback-planning';
 import styles from './main-layout.module.scss';
 
 const SCREEN_CONFIG: Record<string, { title: string; description: string }> = {
@@ -52,7 +53,7 @@ export function MainLayout() {
 
   const handleRoleChange = (role: Role) => {
     setCurrentRole(role);
-    if (role === 'team') fetchFeedbacks();
+    if (role === 'action') fetchFeedbacks();
   };
 
   const handleOpenPanel = () => {
@@ -96,6 +97,8 @@ export function MainLayout() {
               <h1 className={styles['hero-title']}>{screen.title}</h1>
               <p className={styles['hero-description']}>{screen.description}</p>
             </div>
+          ) : currentRole === 'team' ? (
+            <FeedbackPlanning />
           ) : isLoading ? (
             <div className={styles['loading-state']}>
               <span>Yukleniyor...</span>
@@ -105,7 +108,7 @@ export function MainLayout() {
               <span>{fetchError}</span>
             </div>
           ) : (
-            <TeamView
+            <FeedbackBoard
               feedbacks={feedbacks}
               onUpdateStatus={updateFeedbackStatus}
             />
