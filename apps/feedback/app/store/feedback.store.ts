@@ -106,9 +106,8 @@ export const useFeedbackStore = create<FeedbackState>((set, get) => ({
       set((state) => ({
         feedbacks: [created, ...state.feedbacks],
         isSubmitted: true,
-        lastTicketId: String(created.id),
+        lastTicketId: created.ticketId ?? String(created.id),
       }));
-      // Listeyi servisten tazele
       get().fetchFeedbacks();
     } catch {
       set({ submitError: 'Gönderi sırasında bir hata oluştu. Lütfen tekrar deneyin.' });
