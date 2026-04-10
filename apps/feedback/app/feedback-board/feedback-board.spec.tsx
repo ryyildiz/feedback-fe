@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect } from 'vitest';
 import type { Feedback } from '../types';
 import { FeedbackBoard } from './feedback-board';
 
@@ -30,28 +30,28 @@ const mockFeedbacks: Feedback[] = [
 
 describe('FeedbackBoard', () => {
   it('renders section title', () => {
-    render(<FeedbackBoard feedbacks={mockFeedbacks} onUpdateStatus={vi.fn()} />);
+    render(<FeedbackBoard feedbacks={mockFeedbacks} />);
     expect(screen.getByText('Talepler')).toBeTruthy();
   });
 
   it('shows total feedback-widget count', () => {
-    render(<FeedbackBoard feedbacks={mockFeedbacks} onUpdateStatus={vi.fn()} />);
+    render(<FeedbackBoard feedbacks={mockFeedbacks} />);
     expect(screen.getByText('2')).toBeTruthy();
   });
 
   it('shows pending feedback-widget count', () => {
-    render(<FeedbackBoard feedbacks={mockFeedbacks} onUpdateStatus={vi.fn()} />);
+    render(<FeedbackBoard feedbacks={mockFeedbacks} />);
     expect(screen.getByText('1')).toBeTruthy();
   });
 
   it('renders each feedback-widget row by ticketId', () => {
-    render(<FeedbackBoard feedbacks={mockFeedbacks} onUpdateStatus={vi.fn()} />);
+    render(<FeedbackBoard feedbacks={mockFeedbacks} />);
     expect(screen.getByText('TK-A1B2C3D1')).toBeTruthy();
     expect(screen.getByText('TK-A1B2C3D2')).toBeTruthy();
   });
 
   it('renders screen names in the table', () => {
-    render(<FeedbackBoard feedbacks={mockFeedbacks} onUpdateStatus={vi.fn()} />);
+    render(<FeedbackBoard feedbacks={mockFeedbacks} />);
     expect(screen.getByText('Ana Sayfa')).toBeTruthy();
     expect(screen.getByText('Profil')).toBeTruthy();
   });
