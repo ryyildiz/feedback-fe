@@ -1,13 +1,17 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
 import JiraEditor from './jira-editor';
-import { MOCK_PLANNING_TASKS } from '../feedback-planning.types';
+import type { PlanningTask } from '../feedback-planning.types';
 
-const task = MOCK_PLANNING_TASKS[0];
-const defaultProps = {
-  task,
-  onUpdate: vi.fn(),
+const task: PlanningTask = {
+  id: 1, title: 'Ödeme Butonu Pasif Kalıyor',
+  description: "Kullanıcılar 'Öde' butonunun tıklanamaz durumda kaldığını raporluyor.",
+  screenName: 'Payment', issueType: 'BUG',
+  referenceTicketIds: ['TK-A1B2', 'TK-C3D4', 'TK-E5F6'],
+  referenceFeedbackIds: [1, 2, 3], tag: 'FRONTEND', severity: 'CRITICAL',
+  status: 'COMPLETED', analyzedAt: '', createdAt: '', updatedAt: '',
 };
+const defaultProps = { task, onUpdate: vi.fn() };
 
 describe('JiraEditor', () => {
   it('should render without crashing', () => {

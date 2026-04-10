@@ -67,3 +67,12 @@ export async function triggerAnalysis(): Promise<import('../feedback-planning/fe
   const response = await api.post<import('../feedback-planning/feedback-planning.types').PlanningTask[]>('/analyses/trigger');
   return response.data;
 }
+
+/**
+ * GET /api/v1/analyses
+ * Tüm analiz sonuçlarını listeler.
+ */
+export async function getAnalyses(): Promise<import('../feedback-planning/feedback-planning.types').PlanningTask[]> {
+  const response = await api.get<import('../feedback-planning/feedback-planning.types').PlanningTask[]>('/analyses');
+  return response.data;
+}

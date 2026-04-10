@@ -1,15 +1,18 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
 import ActionPanel from './action-panel';
-import { MOCK_PLANNING_TASKS, TEAM_OPTIONS } from '../feedback-planning.types';
+import { TEAM_OPTIONS } from '../feedback-planning.types';
+import type { PlanningTask } from '../feedback-planning.types';
 
-const task = MOCK_PLANNING_TASKS[0];
-const defaultProps = {
-  task,
-  team: TEAM_OPTIONS[0].value,
-  onTeamChange: vi.fn(),
-  onCreate: vi.fn(),
+const task: PlanningTask = {
+  id: 1, title: 'Ödeme Butonu Pasif Kalıyor',
+  description: "Kullanıcılar 'Öde' butonunun tıklanamaz durumda kaldığını raporluyor.",
+  screenName: 'Payment', issueType: 'BUG',
+  referenceTicketIds: ['TK-A1B2'], referenceFeedbackIds: [1],
+  tag: 'FRONTEND', severity: 'CRITICAL',
+  status: 'COMPLETED', analyzedAt: '', createdAt: '', updatedAt: '',
 };
+const defaultProps = { task, team: TEAM_OPTIONS[0].value, onTeamChange: vi.fn(), onCreate: vi.fn() };
 
 describe('ActionPanel', () => {
   it('should render without crashing', () => {

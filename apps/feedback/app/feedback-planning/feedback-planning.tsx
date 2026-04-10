@@ -8,7 +8,7 @@ import {
   TEAM_OPTIONS,
   type PlanningTask,
 } from './feedback-planning.types';
-import { triggerAnalysis } from '../services/feedback.service';
+import { getAnalyses } from '../services/feedback.service';
 import styles from './feedback-planning.module.scss';
 
 const { Text } = Typography;
@@ -21,7 +21,7 @@ const FeedbackPlanning = () => {
   const [fetchError, setFetchError] = useState<string | null>(null);
 
   useEffect(() => {
-    triggerAnalysis()
+    getAnalyses()
       .then((data) => {
         setTasks(data);
         if (data.length > 0) setSelectedId(data[0].id);
