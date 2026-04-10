@@ -98,6 +98,11 @@ export function FeedbackBoard({ feedbacks }: FeedbackBoardProps) {
 
   const pendingCount = feedbacks.filter((f) => !f.isAnalysis).length;
 
+  const sortedFeedbacks = [...feedbacks].sort((a, b) => {
+    if (a.isAnalysis === b.isAnalysis) return 0;
+    return a.isAnalysis ? -1 : 1;
+  });
+
   return (
     <div className={styles.wrapper}>
       {contextHolder}
@@ -152,7 +157,7 @@ export function FeedbackBoard({ feedbacks }: FeedbackBoardProps) {
       </div>
 
       <Table
-        dataSource={feedbacks}
+        dataSource={sortedFeedbacks}
         columns={columns}
         rowKey="id"
         pagination={false}
