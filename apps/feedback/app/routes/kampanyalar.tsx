@@ -1,5 +1,5 @@
 import { MainLayout } from '../layout/main-layout/main-layout';
 
-export default function HatIslemleriPage() {
+export default function KampanyalarPage() {
   return <MainLayout />;
 }

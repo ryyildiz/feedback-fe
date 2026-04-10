@@ -11,7 +11,7 @@ const PAGE_LINKS = [
   { to: '/',              label: 'Anasayfa'      },
   { to: '/fatura',        label: 'Fatura'        },
   { to: '/paketlerim',    label: 'Paketlerim'    },
-  { to: '/hat-islemleri', label: 'Hat İşlemleri'  },
+  { to: '/kampanyalar',   label: 'Kampanyalar'    },
   { to: '/superonline',   label: 'Superonline'  },
 ];
 

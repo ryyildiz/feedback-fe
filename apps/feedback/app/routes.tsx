@@ -4,6 +4,6 @@ export default [
   index('./app.tsx'),
   route('fatura',         './routes/fatura.tsx'),
   route('paketlerim',     './routes/paketlerim.tsx'),
-  route('hat-islemleri',  './routes/hat-islemleri.tsx'),
+  route('kampanyalar',     './routes/kampanyalar.tsx'),
   route('superonline',     './routes/superonline.tsx'),
 ] satisfies RouteConfig;

@@ -14,10 +14,7 @@ interface FeedbackBoardProps {
 
 const STATUS_OPTIONS: { value: FeedbackStatus; label: string; dot: string }[] = [
   { value: 'NEW',          label: 'Yeni',           dot: '#a78bfa' },
-  { value: 'AWAITING',     label: 'Beklemede',      dot: '#f97316' },
-  { value: 'IN_PROGRESS',  label: 'Planlamaya Al',  dot: '#3b82f6' },
   { value: 'RESOLVED',     label: 'Tamamlandı',     dot: '#22c55e' },
-  { value: 'CANCELLED',    label: 'İptal Edildi',   dot: '#ef4444' },
 ];
 
 const statusOption = (opt: typeof STATUS_OPTIONS[number]) => (

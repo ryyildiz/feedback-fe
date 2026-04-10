@@ -24,9 +24,9 @@ const SCREEN_CONFIG: Record<string, { title: string; description: string }> = {
     title: 'Paketlerim',
     description: 'Paket ile ilgili sorulari Paket Ekibine bildirin.',
   },
-  '/hat-islemleri': {
-    title: 'Hat Islemleri',
-    description: 'Hat islemleri sorularini Hat Operasyon Ekibine bildirin.',
+  '/kampanyalar': {
+    title: 'Kampanyalar',
+    description: 'Kampanyalarla ilgili sorulari Hat Operasyon Ekibine bildirin.',
   },
   '/superonline': {
     title: 'Superonline',
