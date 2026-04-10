@@ -158,6 +158,35 @@
   width: 11.875rem;
 }
 
+.issue-type-badge {
+  display: inline-block;
+  padding: 0.2rem 0.65rem;
+  border-radius: 1rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  white-space: nowrap;
+
+  &[data-type='BUG'] {
+    background: #fee2e2;
+    color: #b91c1c;
+  }
+
+  &[data-type='PERFORMANCE'] {
+    background: #e0f2fe;
+    color: #0369a1;
+  }
+
+  &[data-type='DESIGN'] {
+    background: #f3e8ff;
+    color: #7e22ce;
+  }
+
+  &[data-type='SUGGESTION'] {
+    background: #dcfce7;
+    color: #15803d;
+  }
+}
+
 .badge-analyzed,
 .badge-pending {
   display: inline-block;

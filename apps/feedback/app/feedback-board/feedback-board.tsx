@@ -94,13 +94,22 @@ export function FeedbackBoard({ feedbacks }: FeedbackBoardProps) {
       title: 'Tür',
       dataIndex: 'issueType',
       key: 'issueType',
-      render: (val: string) =>
-        ({
+      render: (val: string) => {
+        const labels: Record<string, string> = {
           BUG: 'Hata',
           PERFORMANCE: 'Performans',
           DESIGN: 'Tasarım',
           SUGGESTION: 'Öneri',
-        })[val] ?? val,
+        };
+        return (
+          <span
+            className={styles['issue-type-badge']}
+            data-type={val}
+          >
+            {labels[val] ?? val}
+          </span>
+        );
+      },
     },
     {
       title: 'Görüş',
