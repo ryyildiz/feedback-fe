@@ -1,4 +1,4 @@
-import { Card, Descriptions, Input, Select, Space, Typography } from 'antd';
+import { Card, Descriptions, Select, Space, Typography } from 'antd';
 import { CheckSquareOutlined, CommentOutlined } from '@ant-design/icons';
 import type { PlanningTask } from '../feedback-planning.types';
 import { SEVERITY_OPTIONS } from '../feedback-planning.types';
@@ -26,14 +26,7 @@ export function JiraEditor({ task, onUpdate }: JiraEditorProps) {
     >
       <Descriptions bordered column={1} className={styles['descriptions']}>
         <Descriptions.Item label="TASK ADI">
-          <Input.TextArea
-            value={task.title}
-            onChange={(e) => onUpdate('title', e.target.value)}
-            className={styles['title-input']}
-            placeholder="Görev başlığı..."
-            variant="borderless"
-            autoSize={{ minRows: 1 }}
-          />
+          <span className={styles['title-input']}>{task.title}</span>
         </Descriptions.Item>
 
         <Descriptions.Item label="ÖNCELİK">

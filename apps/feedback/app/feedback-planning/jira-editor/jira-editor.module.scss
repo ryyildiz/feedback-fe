@@ -35,15 +35,11 @@
 
 .title-input {
   font-weight: 700;
-  font-size: 0.875rem !important;
-  color: #002855 !important;
-  padding: 0 !important;
-  resize: none;
-
-  &:focus {
-    border-bottom: 0.125rem solid #ffd200 !important;
-    border-radius: 0;
-  }
+  font-size: 0.875rem;
+  color: #002855;
+  display: block;
+  word-break: break-word;
+  white-space: pre-wrap;
 }
 
 .status-dot {
