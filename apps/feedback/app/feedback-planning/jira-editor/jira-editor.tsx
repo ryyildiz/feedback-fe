@@ -26,12 +26,13 @@ export function JiraEditor({ task, onUpdate }: JiraEditorProps) {
     >
       <Descriptions bordered column={1} className={styles['descriptions']}>
         <Descriptions.Item label="TASK ADI">
-          <Input
+          <Input.TextArea
             value={task.title}
             onChange={(e) => onUpdate('title', e.target.value)}
             className={styles['title-input']}
             placeholder="Görev başlığı..."
             variant="borderless"
+            autoSize={{ minRows: 1 }}
           />
         </Descriptions.Item>
 

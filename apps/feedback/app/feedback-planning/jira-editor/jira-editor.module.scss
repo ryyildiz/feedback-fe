@@ -26,7 +26,7 @@
 
 .descriptions {
   :global(.ant-descriptions-item-label) {
-    font-size: 0.625rem;
+    font-size: 0.75rem;
     font-weight: 800;
     letter-spacing: 0.03125rem;
     color: #94a3b8;
@@ -38,6 +38,7 @@
   font-size: 0.875rem !important;
   color: #002855 !important;
   padding: 0 !important;
+  resize: none;
 
   &:focus {
     border-bottom: 0.125rem solid #ffd200 !important;
