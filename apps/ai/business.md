@@ -82,7 +82,7 @@ Kodsal İşlem: handleUpdateStatus fonksiyonu backend'e PATCH isteği atar ve st
 
 4. Adım: Geri Bildirim (Closing the Loop)
 
-Durum değiştikçe kullanıcı panelindeki "Taleplerim" sekmesi (opsiyonel) veya bildirim merkezi güncellenir.
+Durum değiştikçe kullanıcı panelindeki "Geri Bildirim Yönetimi" sekmesi (opsiyonel) veya bildirim merkezi güncellenir.
 
 4. Özet Analiz Tablosu
 

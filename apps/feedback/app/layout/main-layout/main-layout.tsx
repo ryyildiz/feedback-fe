@@ -75,7 +75,7 @@ export function MainLayout() {
         token: {
           colorPrimary: '#002855',
           borderRadius: 14,
-          fontFamily: 'Noto Sans, sans-serif',
+          fontFamily: "'Greycliff CF', -apple-system, sans-serif",
         },
         components: {
           Segmented: {

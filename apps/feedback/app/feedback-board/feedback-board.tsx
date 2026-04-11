@@ -151,17 +151,31 @@ export function FeedbackBoard({ feedbacks }: FeedbackBoardProps) {
       {contextHolder}
       <div className={styles.header}>
         <div className={styles['header-text']}>
-          <Title level={2} className={styles.title}>Talepler</Title>
-          <Text className={styles.subtitle}>Operasyonel Durum Yönetim Ekranı</Text>
+          <Title level={2} className={styles.title}>
+            Geri Bildirim Yönetimi
+          </Title>
+          <Text className={styles.subtitle}>
+            Operasyonel Durum Yönetim Ekranı
+          </Text>
         </div>
 
         <div className={styles['header-right']}>
-          <Card variant="borderless" size="small" className={styles['stat-card']}>
-            <Space separator={<div className={styles.divider} />} size="large" className={styles['stat-space']}>
+          <Card
+            variant="borderless"
+            size="small"
+            className={styles['stat-card']}
+          >
+            <Space
+              separator={<div className={styles.divider} />}
+              size="large"
+              className={styles['stat-space']}
+            >
               <div className={styles['stat-item']}>
                 <Text className={styles['stat-label']}>TOPLAM HAVUZ</Text>
                 <br />
-                <Text strong className={styles['stat-value']}>{feedbacks.length}</Text>
+                <Text strong className={styles['stat-value']}>
+                  {feedbacks.length}
+                </Text>
               </div>
               <div className={styles['stat-item']}>
                 <Text className={styles['stat-label-pending']}>BEKLEYEN</Text>

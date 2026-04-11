@@ -31,7 +31,7 @@ const mockFeedbacks: Feedback[] = [
 describe('FeedbackBoard', () => {
   it('renders section title', () => {
     render(<FeedbackBoard feedbacks={mockFeedbacks} />);
-    expect(screen.getByText('Talepler')).toBeTruthy();
+    expect(screen.getByText('Geri Bildirim Yönetimi')).toBeTruthy();
   });
 
   it('shows total feedback-widget count', () => {
