@@ -1,8 +1,9 @@
 import { useState } from 'react';
-import { Button, notification } from 'antd';
+import { Button } from 'antd';
 import { ArrowLeftOutlined, ThunderboltFilled } from '@ant-design/icons';
 import { triggerAnalysis } from '../../services/feedback.service';
 import type { PlanningTask } from '../feedback-planning.types';
+import { useAppNotification } from '../../hooks/use-app-notification';
 import styles from './planning-empty-state.module.scss';
 
 interface PlanningEmptyStateProps {
@@ -11,6 +12,7 @@ interface PlanningEmptyStateProps {
 }
 
 export function PlanningEmptyState({ onGoBack, onAnalysisComplete }: PlanningEmptyStateProps) {
+  const { contextHolder, showError } = useAppNotification();
   const [isLoading, setIsLoading] = useState(false);
 
   const handleTrigger = async () => {
@@ -19,11 +21,7 @@ export function PlanningEmptyState({ onGoBack, onAnalysisComplete }: PlanningEmp
       const tasks = await triggerAnalysis();
       onAnalysisComplete(tasks);
     } catch {
-      notification.error({
-        message: 'Analiz Başlatılamadı',
-        description: 'Servis bağlantısı sırasında bir hata oluştu. Lütfen tekrar deneyin.',
-        placement: 'bottomRight',
-      });
+      showError('Analiz Hatası', 'Analiz tetiklenirken bir hata oluştu.', 'Bağlantı Hatası');
     } finally {
       setIsLoading(false);
     }
@@ -31,16 +29,12 @@ export function PlanningEmptyState({ onGoBack, onAnalysisComplete }: PlanningEmp
 
   return (
     <div className={styles.wrapper}>
+      {contextHolder}
       <div className={styles.card}>
         <div className={styles['icon-wrapper']}>
           <svg
             className={styles.icon}
             viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="1.2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
           >
             <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
           </svg>

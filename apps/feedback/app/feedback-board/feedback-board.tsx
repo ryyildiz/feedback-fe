@@ -1,8 +1,9 @@
 import { useCallback, useState } from 'react';
 import axios from 'axios';
-import { Button, Card, Space, Table, Tooltip, Typography, notification } from 'antd';
-import { ThunderboltFilled, WarningFilled } from '@ant-design/icons';
+import { Button, Card, Space, Table, Tooltip, Typography } from 'antd';
+import { ThunderboltFilled } from '@ant-design/icons';
 import type { Feedback } from '../types';
+import { useAppNotification } from '../hooks/use-app-notification';
 import styles from './feedback-board.module.scss';
 
 const { Title, Text } = Typography;
@@ -12,8 +13,7 @@ interface FeedbackBoardProps {
 }
 
 export function FeedbackBoard({ feedbacks }: FeedbackBoardProps) {
-  const [notifApi, contextHolder] = notification.useNotification();
-
+  const { contextHolder, showSuccess, showError, showInfo } = useAppNotification();
   const [isTriggering, setIsTriggering] = useState(false);
 
   const handleTriggerAnalysis = useCallback(async () => {
@@ -22,61 +22,20 @@ export function FeedbackBoard({ feedbacks }: FeedbackBoardProps) {
       .map((f) => f.id);
 
     if (unanalyzedIds.length === 0) {
-      notifApi.info({
-        message: 'Analiz Yapılacak Kayıt Yok',
-        description: 'Tüm geri bildirimler zaten analiz edilmiş.',
-        placement: 'bottomRight',
-      });
+      showInfo('Analiz Yapılacak Kayıt Yok', 'Tüm geri bildirimler zaten analiz edilmiş.');
       return;
     }
 
     setIsTriggering(true);
     try {
-      await axios.post(
-        'http://localhost:8080/api/v1/analyses/trigger',
-      );
-      notifApi.success({
-        message: <span className={styles['notif-title']}>Analiz Tamamlandı</span>,
-        description: (
-          <div className={styles['notif-body']}>
-            <span className={styles['notif-text']}>
-              Geri bildirimler Gemini tarafından başarıyla analiz edildi.
-            </span>
-            <div className={styles['notif-badge']}>
-              <span className={styles['notif-dot-success']} />
-              <span className={styles['notif-badge-text']}>Gemini Analizi Tamamlandı</span>
-            </div>
-          </div>
-        ),
-        icon: <ThunderboltFilled className={styles['notif-icon-success']} />,
-        placement: 'bottomRight',
-        duration: 4,
-        className: styles['notif-container'],
-      });
+      await axios.post('http://localhost:8080/api/v1/analyses/trigger');
+      showSuccess('Analiz Tamamlandı', 'Geri bildirimler Gemini tarafından başarıyla analiz edildi.', 'Gemini Analizi Tamamlandı');
     } catch {
-      notifApi.error({
-        message: <span className={styles['notif-title']}>Analiz Hatası</span>,
-        description: (
-          <div className={styles['notif-body']}>
-            <span className={styles['notif-text']}>
-              Analiz tetiklenirken bir hata oluştu.{' '}
-              <span className={styles['notif-bold']}>Lütfen tekrar deneyin.</span>
-            </span>
-            <div className={styles['notif-badge']}>
-              <span className={styles['notif-dot-error']} />
-              <span className={styles['notif-badge-text']}>Bağlantı Hatası</span>
-            </div>
-          </div>
-        ),
-        icon: <WarningFilled className={styles['notif-icon-error']} />,
-        placement: 'bottomRight',
-        duration: 5,
-        className: styles['notif-container'],
-      });
+      showError('Analiz Hatası', 'Analiz tetiklenirken bir hata oluştu.', 'Bağlantı Hatası');
     } finally {
       setIsTriggering(false);
     }
-  }, [feedbacks, notifApi]);
+  }, [feedbacks, showSuccess, showError, showInfo]);
 
   const columns = [
     {

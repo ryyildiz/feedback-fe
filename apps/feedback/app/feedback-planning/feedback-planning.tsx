@@ -1,6 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Badge, ConfigProvider, Spin, Typography, notification } from 'antd';
-import { ThunderboltOutlined } from '@ant-design/icons';
+import { ConfigProvider, Spin } from 'antd';
 import { TaskSidebar } from './task-sidebar/task-sidebar';
 import { JiraEditor } from './jira-editor/jira-editor';
 import { ActionPanel } from './action-panel/action-panel';
@@ -10,15 +9,15 @@ import {
   type PlanningTask,
 } from './feedback-planning.types';
 import { getAnalyses } from '../services/feedback.service';
+import { useAppNotification } from '../hooks/use-app-notification';
 import styles from './feedback-planning.module.scss';
-
-const { Text } = Typography;
 
 interface FeedbackPlanningProps {
   onGoBack?: () => void;
 }
 
 export const FeedbackPlanning = ({ onGoBack }: FeedbackPlanningProps) => {
+  const { contextHolder, showJiraSuccess } = useAppNotification();
   const [selectedId, setSelectedId] = useState<number | null>(null);
   const [team, setTeam] = useState('fatura-ekibi');
   const [tasks, setTasks] = useState<PlanningTask[]>([]);
@@ -50,30 +49,12 @@ export const FeedbackPlanning = ({ onGoBack }: FeedbackPlanningProps) => {
     const selectedTeamLabel =
       TEAM_OPTIONS.find((o) => o.value === team)?.label ?? 'İlgili Ekip';
 
-    notification.success({
-      message: (
-        <span className={styles['notif-title']}>Aksiyon Planı Devreye Alındı</span>
-      ),
-      description: (
-        <div className={styles['notif-body']}>
-          <Text className={styles['notif-text']}>
-            <span className={styles['notif-bold']}>"{activeTask.title}"</span>{' '}
-            taskı Jira'ya başarıyla aktarılarak
-            <span className={styles['notif-bold']}> {selectedTeamLabel}</span>{' '}
-            backlog havuzuna iletildi.
-          </Text>
-          <div className={styles['notif-badge']}>
-            <Badge status="processing" color="#FFD200" />
-            <Text className={styles['notif-badge-text']}>
-              Jira Senkronizasyonu Aktif
-            </Text>
-          </div>
-        </div>
-      ),
-      icon: <ThunderboltOutlined className={styles['notif-icon']} />,
-      duration: 5,
-      className: styles['notif-container'],
-    });
+    showJiraSuccess(
+      'Aksiyon Planı Devreye Alındı',
+      [activeTask.title, selectedTeamLabel],
+      ["taskı Jira'ya başarıyla aktarılarak", 'backlog havuzuna iletildi.'],
+      'Jira Senkronizasyonu Aktif',
+    );
   };
 
   return (
@@ -81,13 +62,14 @@ export const FeedbackPlanning = ({ onGoBack }: FeedbackPlanningProps) => {
       theme={{ token: { colorPrimary: '#002855', borderRadius: 16 } }}
     >
       <div className={styles['wrapper']}>
+        {contextHolder}
         {isLoading ? (
           <div className={styles['loading-state']}>
             <Spin size="large" />
           </div>
         ) : fetchError || tasks.length === 0 ? (
           <PlanningEmptyState
-            onGoBack={onGoBack ?? (() => {})}
+            onGoBack={onGoBack}
             onAnalysisComplete={(newTasks) => {
               setTasks(newTasks);
               if (newTasks.length > 0) setSelectedId(newTasks[0].id);
