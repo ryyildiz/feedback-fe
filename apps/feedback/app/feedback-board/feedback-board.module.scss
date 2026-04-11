@@ -242,20 +242,15 @@
 
 // ── AI Analiz FAB ─────────────────────────────────────────────────
 .ai-fab {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-
-  padding: 2rem;
-  border: none;
-  border-radius: 3rem;
-  cursor: pointer;
-
-  background: linear-gradient(135deg, #002855 0%, #0057b8 100%);
-  color: #fff;
-  font-size: 0.875rem;
-  font-weight: 700;
-  letter-spacing: 0.02em;
+  height: 3rem !important;
+  padding: 0 1.75rem !important;
+  border-radius: 3rem !important;
+  font-weight: 700 !important;
+  font-size: 0.875rem !important;
+  background: #002855 !important;
+  border-color: #002855 !important;
+  color: #fff !important;
+  box-shadow: 0 0.5rem 1.25rem rgba(0, 40, 85, 0.2) !important;
 }
 
 .ai-fab-icon {

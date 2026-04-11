@@ -1,54 +1,65 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
+import * as feedbackStore from '../../store/feedback.store';
 import { FeedbackForm } from './feedback-form';
 
-const emptyForm = { issueType: '', feedback: '', capturedUrl: 'http://localhost/', userId: 'user-test' };
+const mockSetFormData = vi.fn();
+const mockSubmitFeedback = vi.fn();
+
+const makeStore = (overrides = {}) => ({
+  formData: { issueType: '', feedbackText: '', url: '', createdBy: '', screenName: '' },
+  setFormData: mockSetFormData,
+  submitFeedback: mockSubmitFeedback,
+  isSubmitting: false,
+  submitError: null,
+  ...overrides,
+});
 
 describe('FeedbackForm', () => {
-  it('renders all topic cards', () => {
-    render(<FeedbackForm formData={emptyForm} onChange={vi.fn()} onSubmit={vi.fn()} />);
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
+
+  it('tüm kategori kartlarını render eder', () => {
+    vi.spyOn(feedbackStore, 'useFeedbackStore').mockReturnValue(makeStore() as never);
+    render(<FeedbackForm />);
     expect(screen.getByText('Hata')).toBeTruthy();
     expect(screen.getByText('Tasarım')).toBeTruthy();
     expect(screen.getByText('Hız')).toBeTruthy();
     expect(screen.getByText('Öneri')).toBeTruthy();
   });
 
-  it('submit button is disabled when form is empty', () => {
-    render(<FeedbackForm formData={emptyForm} onChange={vi.fn()} onSubmit={vi.fn()} />);
+  it('form boşken gönder butonu disabled olur', () => {
+    vi.spyOn(feedbackStore, 'useFeedbackStore').mockReturnValue(makeStore() as never);
+    render(<FeedbackForm />);
     const btn = screen.getByRole('button', { name: /HEMEN GÖNDER/i });
     expect(btn).toHaveAttribute('disabled');
   });
 
-  it('calls onChange with selected topic when a card is clicked', async () => {
-    const onChange = vi.fn();
-    render(<FeedbackForm formData={emptyForm} onChange={onChange} onSubmit={vi.fn()} />);
+  it('kategori kartına tıklayınca setFormData çağrılır', async () => {
+    vi.spyOn(feedbackStore, 'useFeedbackStore').mockReturnValue(makeStore() as never);
+    render(<FeedbackForm />);
     await userEvent.click(screen.getByText('Hata'));
-    expect(onChange).toHaveBeenCalledWith({ issueType: 'hata', feedback: '', capturedUrl: 'http://localhost/', userId: 'user-test' });
+    expect(mockSetFormData).toHaveBeenCalledWith({ issueType: 'BUG' });
   });
 
-  it('submit button is enabled when both topic and feedback-widget are filled', () => {
-    render(
-      <FeedbackForm
-        formData={{ issueType: 'hata', feedback: 'Bir hata var', capturedUrl: 'http://localhost/', userId: 'user-test' }}
-        onChange={vi.fn()}
-        onSubmit={vi.fn()}
-      />
+  it('kategori ve görüş dolu iken gönder butonu aktif olur', () => {
+    vi.spyOn(feedbackStore, 'useFeedbackStore').mockReturnValue(
+      makeStore({ formData: { issueType: 'BUG', feedbackText: 'Bir hata var', url: '', createdBy: '', screenName: '' } }) as never,
     );
+    render(<FeedbackForm />);
     const btn = screen.getByRole('button', { name: /HEMEN GÖNDER/i });
     expect(btn).not.toHaveAttribute('disabled');
   });
 
-  it('calls onSubmit when submit button is clicked', async () => {
-    const onSubmit = vi.fn();
-    render(
-      <FeedbackForm
-        formData={{ issueType: 'oneri', feedback: 'Güzel öneri', capturedUrl: 'http://localhost/', userId: 'user-test' }}
-        onChange={vi.fn()}
-        onSubmit={onSubmit}
-      />
+  it('gönder butonuna tıklayınca submitFeedback çağrılır', async () => {
+    vi.spyOn(feedbackStore, 'useFeedbackStore').mockReturnValue(
+      makeStore({ formData: { issueType: 'SUGGESTION', feedbackText: 'Güzel öneri', url: '', createdBy: '', screenName: '' } }) as never,
     );
+    render(<FeedbackForm />);
     await userEvent.click(screen.getByRole('button', { name: /HEMEN GÖNDER/i }));
-    expect(onSubmit).toHaveBeenCalledOnce();
+    expect(mockSubmitFeedback).toHaveBeenCalledOnce();
   });
 });
+

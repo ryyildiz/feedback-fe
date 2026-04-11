@@ -97,7 +97,7 @@ export function MainLayout() {
               <p className={styles['hero-description']}>{screen.description}</p>
             </div>
           ) : currentRole === 'team' ? (
-            <FeedbackPlanning />
+            <FeedbackPlanning onGoBack={() => setCurrentRole('action')} />
           ) : isLoading ? (
             <div className={styles['loading-state']}>
               <span>Yükleniyor...</span>

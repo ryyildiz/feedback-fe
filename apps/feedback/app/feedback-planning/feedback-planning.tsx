@@ -4,6 +4,7 @@ import { ThunderboltOutlined } from '@ant-design/icons';
 import { TaskSidebar } from './task-sidebar/task-sidebar';
 import { JiraEditor } from './jira-editor/jira-editor';
 import { ActionPanel } from './action-panel/action-panel';
+import { PlanningEmptyState } from './planning-empty-state/planning-empty-state';
 import {
   TEAM_OPTIONS,
   type PlanningTask,
@@ -13,7 +14,11 @@ import styles from './feedback-planning.module.scss';
 
 const { Text } = Typography;
 
-export const FeedbackPlanning = () => {
+interface FeedbackPlanningProps {
+  onGoBack?: () => void;
+}
+
+export const FeedbackPlanning = ({ onGoBack }: FeedbackPlanningProps) => {
   const [selectedId, setSelectedId] = useState<number | null>(null);
   const [team, setTeam] = useState('fatura-ekibi');
   const [tasks, setTasks] = useState<PlanningTask[]>([]);
@@ -80,10 +85,14 @@ export const FeedbackPlanning = () => {
           <div className={styles['loading-state']}>
             <Spin size="large" />
           </div>
-        ) : fetchError ? (
-          <div className={styles['error-state']}>
-            <span>{fetchError}</span>
-          </div>
+        ) : fetchError || tasks.length === 0 ? (
+          <PlanningEmptyState
+            onGoBack={onGoBack ?? (() => {})}
+            onAnalysisComplete={(newTasks) => {
+              setTasks(newTasks);
+              if (newTasks.length > 0) setSelectedId(newTasks[0].id);
+            }}
+          />
         ) : (
           <div className={styles['layout']}>
             <TaskSidebar
