@@ -84,12 +84,19 @@ export function FeedbackBoard({ feedbacks }: FeedbackBoardProps) {
       dataIndex: 'ticketId',
       key: 'ticketId',
       render: (ticketId: string) => (
-        <Text strong className={styles['id-text']}>
+        <span className={styles['id-text']}>
           {ticketId ?? '—'}
-        </Text>
+        </span>
       ),
     },
-    { title: 'Ekran', dataIndex: 'screenName', key: 'screenName' },
+    {
+      title: 'Ekran',
+      dataIndex: 'screenName',
+      key: 'screenName',
+      render: (val: string) => (
+        <span className={styles['cell-text']}>{val}</span>
+      ),
+    },
     {
       title: 'Tür',
       dataIndex: 'issueType',
@@ -115,16 +122,18 @@ export function FeedbackBoard({ feedbacks }: FeedbackBoardProps) {
       title: 'Görüş',
       dataIndex: 'feedbackText',
       key: 'feedbackText',
+      render: (val: string) => (
+        <span className={styles['feedback-text']}>{val}</span>
+      ),
     },
     {
       title: 'Analiz',
       dataIndex: 'isAnalysis',
       key: 'isAnalysis',
       render: (val: boolean) => (
-        <span
-          className={val ? styles['badge-analyzed'] : styles['badge-pending']}
-        >
-          {val ? 'Edildi' : 'Bekliyor'}
+        <span className={val ? styles['badge-analyzed'] : styles['badge-pending']}>
+          <span className={val ? styles['badge-dot-analyzed'] : styles['badge-dot-pending']} />
+          {val ? 'EDİLDİ' : 'BEKLİYOR'}
         </span>
       ),
     },
