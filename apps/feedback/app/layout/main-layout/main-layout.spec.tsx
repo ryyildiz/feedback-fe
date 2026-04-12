@@ -4,7 +4,6 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { MemoryRouter } from 'react-router';
 import { MainLayout } from './main-layout';
 
-// ── Store mock ─────────────────────────────────────────────────────────────
 const mockFetchFeedbacks = vi.fn();
 const mockSetFormData = vi.fn();
 const mockResetForm = vi.fn();
@@ -22,7 +21,6 @@ vi.mock('../../store/feedback-widget.store', () => ({
   }),
 }));
 
-// ── Child component mocks ──────────────────────────────────────────────────
 vi.mock('../main-navbar/main-navbar', () => ({
   MainNavbar: ({ currentRole, onRoleChange }: { currentRole: string; onRoleChange: (r: string) => void }) => (
     <div>
@@ -53,7 +51,6 @@ vi.mock('../../feedback-widget-board/feedback-widget-board', () => ({
   FeedbackBoard: () => <div data-testid="feedback-board">FeedbackBoard</div>,
 }));
 
-// ── Helpers ────────────────────────────────────────────────────────────────
 const renderLayout = (path = '/') =>
   render(
     <MemoryRouter initialEntries={[path]}>
@@ -61,7 +58,6 @@ const renderLayout = (path = '/') =>
     </MemoryRouter>
   );
 
-// ── Tests ──────────────────────────────────────────────────────────────────
 describe('MainLayout', () => {
   beforeEach(() => {
     vi.clearAllMocks();

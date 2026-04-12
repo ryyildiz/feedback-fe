@@ -1,4 +1,3 @@
-// ---------- Temel enum'lar (API sözleşmesi ile bire bir) ----------
 
 /** POST /feedbacks → issueType değerleri */
 export type IssueType = 'BUG' | 'PERFORMANCE' | 'DESIGN' | 'SUGGESTION';
@@ -50,14 +49,11 @@ export interface UpdateFeedbackRequest {
   isAnalysis?: boolean;
 }
 
-// ---------- Analysis API Tipleri ----------
 
 /** POST /api/v1/analyses/trigger — yanıt */
 export interface TriggerAnalysisResponse {
   message: string;
   triggeredCount: number;
 }
-
-// ---------- UI Yardımcı Tipleri ----------
 
 export type Role = 'user' | 'team' | 'action';

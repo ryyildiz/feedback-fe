@@ -12,7 +12,6 @@ import {
   updateFeedback,
 } from '../services/feedback.service';
 
-// Form için UI drafter tipi — issueType başlangıçta seçilmemiş olabilir
 export type FeedbackDraft = Omit<CreateFeedbackRequest, 'issueType'> & {
   issueType: IssueType | '';
 };
@@ -26,19 +25,15 @@ const EMPTY_DRAFT: FeedbackDraft = {
 };
 
 interface FeedbackState {
-  // --- Veri ---
   feedbacks: Feedback[];
   formData: FeedbackDraft;
   lastTicketId: string;
 
-  // --- Durum bayrakları ---
   isLoading: boolean;
   isSubmitting: boolean;
   isSubmitted: boolean;
   fetchError: string | null;
   submitError: string | null;
-
-  // --- Aksiyonlar ---
 
   /** Tüm geri bildirimleri API'den çeker */
   fetchFeedbacks: () => Promise<void>;
@@ -66,7 +61,6 @@ export const useFeedbackStore = create<FeedbackState>((set, get) => ({
   fetchError: null,
   submitError: null,
 
-  // ----------------------------------------------------------------
   fetchFeedbacks: async () => {
     set({ isLoading: true, fetchError: null });
     try {
@@ -79,15 +73,12 @@ export const useFeedbackStore = create<FeedbackState>((set, get) => ({
     }
   },
 
-  // ----------------------------------------------------------------
   setFormData: (patch) =>
     set((state) => ({ formData: { ...state.formData, ...patch } })),
 
-  // ----------------------------------------------------------------
   resetForm: () =>
     set({ formData: { ...EMPTY_DRAFT }, isSubmitted: false, submitError: null }),
 
-  // ----------------------------------------------------------------
   submitFeedback: async () => {
     const { formData } = get();
     if (!formData.issueType || !formData.feedbackText) return;
@@ -116,9 +107,7 @@ export const useFeedbackStore = create<FeedbackState>((set, get) => ({
     }
   },
 
-  // ----------------------------------------------------------------
   updateFeedbackStatus: async (id, status) => {
-    // Optimistik güncelleme
     set((state) => ({
       feedbacks: state.feedbacks.map((f) =>
         f.id === id ? { ...f, status } : f,
@@ -131,7 +120,6 @@ export const useFeedbackStore = create<FeedbackState>((set, get) => ({
         feedbacks: state.feedbacks.map((f) => (f.id === updated.id ? updated : f)),
       }));
     } catch {
-      // Hata durumunda geri al — tekrar fetch
       get().fetchFeedbacks();
     }
   },
